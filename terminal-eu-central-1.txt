@@ -1,0 +1,70 @@
+{
+    "Stacks": [
+        {
+            "StackId": "arn:aws:cloudformation:eu-central-1:300326902600:stack/Snyk-Bootstrap/c20f3970-8b34-11eb-831d-06752a7f9738",
+            "StackName": "Snyk-Bootstrap",
+            "Description": "Snyk master installer pipeline",
+            "Parameters": [
+                {
+                    "ParameterKey": "CustomerCredentialsName",
+                    "ParameterValue": "SnykCustomerCredentials"
+                },
+                {
+                    "ParameterKey": "ConfigKey",
+                    "ParameterValue": "config.zip"
+                },
+                {
+                    "ParameterKey": "BuildScriptsFilename",
+                    "ParameterValue": "buildscripts.zip"
+                },
+                {
+                    "ParameterKey": "Platform",
+                    "ParameterValue": "CNA"
+                },
+                {
+                    "ParameterKey": "StagingConfigKey",
+                    "ParameterValue": "config.zip"
+                },
+                {
+                    "ParameterKey": "CognitoAppID",
+                    "ParameterValue": "21qjp0v16tnfcsvbotu081j0nq"
+                },
+                {
+                    "ParameterKey": "Teardown",
+                    "ParameterValue": "FALSE"
+                },
+                {
+                    "ParameterKey": "StagingConfigBucket",
+                    "ParameterValue": "snyk-installer-config-staging-300326902600-eu-central-1"
+                },
+                {
+                    "ParameterKey": "CognitoRegion",
+                    "ParameterValue": "eu-west-1"
+                },
+                {
+                    "ParameterKey": "InstallerAPI",
+                    "ParameterValue": "https://2hzzi5o4sk.execute-api.eu-west-1.amazonaws.com/prod"
+                },
+                {
+                    "ParameterKey": "SnykAdminRoleName",
+                    "ParameterValue": ""
+                }
+            ],
+            "CreationTime": "2021-03-22T17:33:47.884000+00:00",
+            "DeletionTime": "2021-03-22T17:33:58.936000+00:00",
+            "LastUpdatedTime": "2021-03-22T17:33:53.278000+00:00",
+            "RollbackConfiguration": {},
+            "StackStatus": "ROLLBACK_COMPLETE",
+            "DisableRollback": false,
+            "NotificationARNs": [],
+            "Capabilities": [
+                "CAPABILITY_NAMED_IAM"
+            ],
+            "Tags": [],
+            "EnableTerminationProtection": false,
+            "DriftInformation": {
+                "StackDriftStatus": "NOT_CHECKED"
+            }
+        }
+    ]
+}
