@@ -6,6 +6,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: snyk-labs/actions/snyk-scm-issues-to-gh-issues@main
+        with:
+           use_fresh_issues: "true"  
 
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
