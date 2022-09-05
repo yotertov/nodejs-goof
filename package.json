@@ -37,7 +37,6 @@
     "moment": "2.15.1",
     "mongodb": "^3.5.9",
     "mongoose": "4.2.4",
-    "lyft-dataset-sdk": "0.0.1",
     "morgan": "latest",
     "ms": "^0.7.1",
     "mysql": "^2.18.1",
