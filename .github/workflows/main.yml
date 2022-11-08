@@ -1,0 +1,21 @@
+name: Example workflow using Snyk
+on: push
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Run Snyk to check for critical vulnerabilities
+        uses: snyk/actions/node@master
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=critical --json-file-output=results.json
+      - name: Count number of resulting vulnerabilities
+        run: |
+          echo "VULNS=$(cat results.json | jq '.vulnerabilities[].severity' | wc -l)" >> $GITHUB_ENV
+      - name: Fail if total number greater than 5
+        if: env.VULNS > 5
+        run: |
+          exit 1
