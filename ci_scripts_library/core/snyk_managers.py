@@ -39,7 +39,6 @@ class Manager(abc.ABC):
 
     @staticmethod
     def factory(klass, client, instance=None):
-        print(f"klass: {klass}")
         try:
             if isinstance(klass, str):
                 key = klass

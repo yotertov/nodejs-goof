@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from typing import Optional, Any, Dict, List
 from uuid import UUID
 from .snyk_managers import Manager as V3Manager
-from snyk.models import AggregatedIssue
+from snyk.models import AggregatedIssue, Project
 
 
 @dataclass
@@ -92,11 +92,19 @@ class Target(DataClassJSONMixin):
     attributes: TargetAttributes
     relationships: TargetRelationships
 
+#@dataclass
+#class ProjectIssues(DataClassJSONMixin):
+#    projectId: UUID
+#    projectName: str
+#    projectBrowseUrl: str
+#    packageName: str
+#    projectType: str
+#    issues: List[AggregatedIssue]
+
 @dataclass
 class ProjectIssues(DataClassJSONMixin):
-    projectId: UUID
-    projectName: str
-    projectBrowseUrl: str
-    packageName: str
-    projectType: str
+    project: Project
     issues: List[AggregatedIssue]
+
+    def __getitem__(self, item):
+        return getattr(self, item)

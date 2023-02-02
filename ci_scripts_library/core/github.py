@@ -58,10 +58,48 @@ class GithubWithIssueMetadata(Github):
         body: str,
         **kwargs
     ) -> Issue:
+        MAX_ISSUE_CHARS: int = 65536
+        DETAILED_PATH_STRING: str = "Introduced through"
+
         metadata_entry = self.format_metadata_entry(metadata_prefix, metadata_key, metadata_value)
-        print(f"metadata_entry: {metadata_entry}")
+        #print(f"metadata_entry: {metadata_entry}")
         body = f"{body}\n\n{metadata_entry}"
-        return self.get_repo(repo_full_name).create_issue(title=title, body=body, **kwargs)
+
+        new_body = body
+
+        # handle case where body is greater than maximum allowed characters
+        n_chars_body = len(body)
+        #print(f"{n_chars_body=}")
+        if n_chars_body > MAX_ISSUE_CHARS:
+           # first see by how much we are exceeding the limit
+           n_chars_to_remove = n_chars_body - MAX_ISSUE_CHARS
+           print(f"{n_chars_to_remove=}")
+           
+           # now let's see how many chars are used by the Detailed paths section
+           # loop over body
+           n_char_count = 0
+           for line in body.splitlines():
+               # print(f"{line=}")
+               if DETAILED_PATH_STRING in line:
+                 n_char_count += len(line)
+           
+           #print(f"{n_char_count=}") 
+           
+           n_paths_char_to_keep = n_char_count - n_chars_to_remove
+
+           #rebuild body while trimming down the detailed paths
+           new_body = ""
+           n_paths_char_count = 0
+           for line in body.splitlines():
+               if DETAILED_PATH_STRING in line:
+                   n_paths_char_count += len(line)
+                   if n_paths_char_count < n_paths_char_to_keep:
+                       new_body += line
+               else:
+                   new_body += line
+
+        #print(f"{len(new_body)=}")
+        return self.get_repo(repo_full_name).create_issue(title=title, body=new_body, **kwargs)
     
     def get_metadata_from_body(self, issue_body: str, metadata_prefix: str) -> IssueMetadata:
         
@@ -72,7 +110,7 @@ class GithubWithIssueMetadata(Github):
         # regex out the metadata
         match = re.search(
             f'<!--\s{metadata_prefix}\s=\s(.*)\s-->',
-            issue_body,
+            str(issue_body),
             re.IGNORECASE
         )
     
