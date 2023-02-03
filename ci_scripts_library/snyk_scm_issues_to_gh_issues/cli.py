@@ -85,11 +85,13 @@ def main(ctx: typer.Context,
 
     typer.echo("Remote repo url" + g['remote_repo_url'])
 
-    g['github_org'] = get_github_org_name(remote_repo_url)
-    g['snyk_org'] = find_snyk_org_from_github_org(g['snyk_client'], g['github_org'], g['snyk_prefix'])
+    # g['github_org'] = get_github_org_name(remote_repo_url)
+    g['github_org'] = "rhicksiii91"
+    # g['snyk_org'] = find_snyk_org_from_github_org(g['snyk_client'], g['github_org'], g['snyk_prefix'])
+    g['snyk_org'] = find_snyk_org_from_github_org(g['snyk_client'], g['github_org'])
 
     if not g['snyk_org']:
-        sys.exit(f"Can not find GitHub organization in Snyk.  Check Snyk to make sure {g['snyk_prefix']}_{g['github_org']} is the current Snyk organization slug.")
+        sys.exit(f"Can not find GitHub organization in Snyk.  Check Snyk to make sure {g['github_org']} is the current Snyk organization slug.")
 
     g['repo_full_name'] = get_repo_full_name_from_repo_url(remote_repo_url)
     g['github_org'] = get_github_org_name(remote_repo_url)

@@ -46,7 +46,8 @@ def get_github_repo_name(repo_url:str) -> str:
         print(f"The following remote repo: {repo_url} is invalid")
 
 # Return snyk organizations that match Github Organizations with Snyk rest api
-def find_snyk_org_from_github_org(snyk_client:SuperSnykClient, github_org_name: str, snyk_prefix: str):
+# def find_snyk_org_from_github_org(snyk_client:SuperSnykClient, github_org_name: str, snyk_prefix: str):
+def find_snyk_org_from_github_org(snyk_client:SuperSnykClient, github_org_name: str):
     snyk_org_slug = github_org_name
     snyk_orgs = snyk_client.organizations.all()
 
