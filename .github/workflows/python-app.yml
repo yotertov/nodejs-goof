@@ -36,4 +36,4 @@ jobs:
     - name: what's in here
       run: cd ci_scripts_library/snyk_scm_issues_to_gh_issues && ls -al
     - name: Create and delete GitHub issues based off of Snyk projects
-      run: python library/ci_scripts_library/snyk_scm_issues_to_gh_issues/cli.py snyk-license-check
+      run: python ci_scripts_library/snyk_scm_issues_to_gh_issues/cli.py snyk-license-check
