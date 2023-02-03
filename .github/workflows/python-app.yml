@@ -11,7 +11,8 @@ permissions:
 env:
     REMOTE_REPO_URL: ${{ secrets.REMOTE_REPO_URL }},
     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }},
-    GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+    GITHUB_TOKEN: ${{ secrets.GH_TOKEN }},
+    POETRY_VIRTUALENVS_CREATE: false
 
 jobs:
   build:
@@ -25,14 +26,11 @@ jobs:
       with:
         python-version: "3.7"
     - name: Install Poetry
-    - uses: actions/checkout@v1
-    - uses: actions/setup-python@v1
-      run: |
-          pip install -U pip
-          pip install poetry
-          poetry install
-      env:
-          POETRY_VIRTUALENVS_CREATE: false
+        run: |
+            pip install -U pip
+            pip install poetry
+            poetry install
+          
     - name: Install dependencies
       run: poetry install --no-interaction --no-root
     - name: Create and delete GitHub issues based off of Snyk projects
