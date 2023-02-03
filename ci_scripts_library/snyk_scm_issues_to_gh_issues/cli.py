@@ -78,6 +78,7 @@ def main(ctx: typer.Context,
 
     g['github_org'] = get_github_org_name(remote_repo_url)
     g['snyk_org'] = find_snyk_org_from_github_org(g['snyk_client'], g['github_org'], g['snyk_prefix'])
+    typer.echo("Did this line come back")
 
     if not g['snyk_org']:
         sys.exit(f"Can not find GitHub organization in Snyk.  Check Snyk to make sure {g['snyk_prefix']}_{g['github_org']} is the current Snyk organization slug.")
