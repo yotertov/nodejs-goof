@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v2
     - name: Set up Python 3.9
       uses: actions/setup-python@v3
       with:
@@ -34,4 +34,5 @@ jobs:
     - name: Install dependencies
       run: poetry install --no-interaction --no-root
     - name: Create and delete GitHub issues based off of Snyk projects
+      run: pwd
       run: python library/ci-scripts-library/snyk_scm_issues_to_gh_issues/cli.py snyk-license-check
