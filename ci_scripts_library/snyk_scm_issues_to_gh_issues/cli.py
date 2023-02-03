@@ -67,7 +67,8 @@ def main(ctx: typer.Context,
     g['snyk_token'] = snyk_token
     # g['remote_repo_url'] = remote_repo_url
     g['remote_repo_url'] = "rhicksiii91/goof"
-    g['snyk_prefix']= snyk_prefix
+    # g['snyk_prefix']= snyk_prefix
+    g['snyk_prefix']= ""
     g['delay']= 15
     g['retry']= 5
 
