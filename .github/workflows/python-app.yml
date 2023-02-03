@@ -34,4 +34,4 @@ jobs:
     - name: Install dependencies
       run: poetry install --no-interaction --no-root
     - name: Create and delete GitHub issues based off of Snyk projects
-      run: python ./ci-scripts-library/snyk_scm_issues_to_gh_issues/cli.py snyk-license-check
+      run: python library/ci-scripts-library/snyk_scm_issues_to_gh_issues/cli.py snyk-license-check
