@@ -76,6 +76,7 @@ def main(ctx: typer.Context,
     g['snyk_client'] = SuperSnykClient(g['snyk_token'])
     typer.echo("Snyk client created successfully")
 
+    typer.echo("Starting something")
     g['github_org'] = get_github_org_name(remote_repo_url)
     g['snyk_org'] = find_snyk_org_from_github_org(g['snyk_client'], g['github_org'], g['snyk_prefix'])
     typer.echo("Did this line come back")
