@@ -50,8 +50,9 @@ def find_snyk_org_from_github_org(snyk_client:SuperSnykClient, github_org_name: 
     snyk_org_slug = github_org_name
     snyk_orgs = snyk_client.organizations.all()
 
-    if snyk_prefix:
-        snyk_org_slug = f"{snyk_prefix}_{github_org_name}"
+    # Change this back once your are done
+    # if snyk_prefix:
+    #     snyk_org_slug = f"{snyk_prefix}_{github_org_name}"
     
     snyk_org = [x for x in snyk_orgs if f"{snyk_org_slug}" == x.attributes['slug']]
     if len(snyk_org) > 0:
