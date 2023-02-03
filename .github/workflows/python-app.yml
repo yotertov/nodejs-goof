@@ -25,12 +25,16 @@ jobs:
       with:
         python-version: "3.7"
     - name: Install Poetry
-        uses: snok/install-poetry@v1
-        with:
-          virtualenvs-create: true
-          virtualenvs-in-project: true
-          installer-parallel: true
+      - uses: actions/checkout@v1
+      - uses: actions/setup-python@v1
+      - run: |
+          pip install -U pip
+          pip install poetry
+          poetry install
+        env:
+          POETRY_VIRTUALENVS_CREATE: false
     - name: Install dependencies
       run: poetry install --no-interaction --no-root
     - name: Create and delete GitHub issues based off of Snyk projects
       run: python ci-scripts-library/snyk_scm_issues_to_gh_issues/cli.py snyk-license-check
+å
