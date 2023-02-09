@@ -9,15 +9,12 @@ permissions:
   contents: read
 
 env:
-    REMOTE_REPO_URL: ${{ vars.GITHUB_REPOSITORY }},
+    REMOTE_REPO_URL: ${{ github.repository }},
     SNYK_TOKEN: ${{ vars.SNYK_TOKEN }},
     GITHUB_TOKEN: ${{ vars.GH_TOKEN }},
     POETRY_VIRTUALENVS_CREATE: false
 
 jobs:
-  echo:
-    steps:
-      - run: echo "$GITHUB_REPOSITORY"
   build:
 
     runs-on: ubuntu-latest
