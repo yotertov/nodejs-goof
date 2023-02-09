@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 env:
-    REMOTE_REPO_URL: ${{ env.GITHUB_REPOSITORY }},
+    REMOTE_REPO_URL: ${{ GITHUB_REPOSITORY }},
     SNYK_TOKEN: ${{ vars.SNYK_TOKEN }},
     GITHUB_TOKEN: ${{ vars.GH_TOKEN }},
     POETRY_VIRTUALENVS_CREATE: false
