@@ -9,9 +9,9 @@ permissions:
   contents: read
 
 env:
-    REMOTE_REPO_URL: ${{ secrets.REMOTE_REPO_URL }},
-    SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }},
-    GITHUB_TOKEN: ${{ secrets.GH_TOKEN }},
+    REMOTE_REPO_URL: ${{ vars.REMOTE_REPO_URL }},
+    SNYK_TOKEN: ${{ vars.SNYK_TOKEN }},
+    GITHUB_TOKEN: ${{ vars.GH_TOKEN }},
     POETRY_VIRTUALENVS_CREATE: false
 
 jobs:
