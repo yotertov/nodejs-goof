@@ -66,7 +66,7 @@ def main(ctx: typer.Context,
     g['github_token'] = github_token
     g['snyk_token'] = snyk_token
     # g['remote_repo_url'] = remote_repo_url
-    g['remote_repo_url'] = "rhicksiii91/goof"
+    g['remote_repo_url'] = remote_repo_url
     # g['snyk_prefix']= snyk_prefix
     g['snyk_prefix']= ""
     g['delay']= 15
@@ -82,7 +82,7 @@ def main(ctx: typer.Context,
     g['snyk_client'] = SuperSnykClient(snyk_t)
     # typer.echo("Snyk client created successfully")
 
-    typer.echo("Remote repo url" + g['remote_repo_url'])
+    typer.echo("Remote repo url " + g['remote_repo_url'])
 
     # g['github_org'] = get_github_org_name(remote_repo_url)
     g['github_org'] = "rhicksiii91"
