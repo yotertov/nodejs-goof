@@ -15,6 +15,9 @@ env:
     POETRY_VIRTUALENVS_CREATE: false
 
 jobs:
+  echo:
+    steps:
+      - run: echo "$GITHUB_REPOSITORY"
   build:
 
     runs-on: ubuntu-latest
