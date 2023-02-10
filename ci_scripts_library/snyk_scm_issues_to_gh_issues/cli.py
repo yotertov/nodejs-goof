@@ -84,10 +84,11 @@ def main(ctx: typer.Context,
 
     # g['snyk_client'] = SuperSnykClient(snyk_t)
     # typer.echo("Snyk client created successfully")
-
+    
+    typer.echo("Running GitHub org method ")
     g['github_org'] = get_github_org_name(g['remote_repo_url'])
 
-    typer.echo("Github Org name " + g['github_org'])
+    
     # g['github_org'] = "rhicksiii91"
     # g['snyk_org'] = find_snyk_org_from_github_org(g['snyk_client'], g['github_org'], g['snyk_prefix'])
     g['snyk_org'] = find_snyk_org_from_github_org(g['snyk_client'], g['github_org'])
