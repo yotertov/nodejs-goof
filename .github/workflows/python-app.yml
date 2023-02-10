@@ -3,15 +3,15 @@
 
 name: Python application
 
-on: [push]
+on: [pull_request_target]
 
 permissions:
   contents: read
 
 env:
     REMOTE_REPO_URL: ${{ github.repository }},
-    SNYK_TOKEN: $SNYK_TOKEN
-    GITHUB_TOKEN: $GH_TOKEN,
+    SNYK_TOKEN: ${{ vars.SNYK_TOKEN }},
+    GITHUB_TOKEN: ${{ vars.GH_TOKEN }},
     POETRY_VIRTUALENVS_CREATE: false
 
 jobs:
