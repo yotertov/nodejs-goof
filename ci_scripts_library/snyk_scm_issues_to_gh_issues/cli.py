@@ -87,7 +87,7 @@ def main(ctx: typer.Context,
 
     typer.echo("Remote repo url " + g['remote_repo_url'])
 
-    g['github_org'] = get_github_org_name(remote_repo_url)
+    g['github_org'] = get_github_org_name(g['remote_repo_url'])
     # g['github_org'] = "rhicksiii91"
     # g['snyk_org'] = find_snyk_org_from_github_org(g['snyk_client'], g['github_org'], g['snyk_prefix'])
     g['snyk_org'] = find_snyk_org_from_github_org(g['snyk_client'], g['github_org'])
