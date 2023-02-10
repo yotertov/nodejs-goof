@@ -73,7 +73,8 @@ def main(ctx: typer.Context,
     g['delay']= 15
     g['retry']= 5
 
-    typer.echo("Snyk account " + g['snyk_token'] + "GH inforamtion" + g['github_token'])
+    typer.echo(g['snyk_token'])
+    typer.echo(g['github_token'])
 
     g['github_client'] = GitHub(g['github_token'])
     typer.echo("Github client created successfully")
