@@ -10,8 +10,8 @@ permissions:
 
 env:
     REMOTE_REPO_URL: ${{ github.repository }},
-    SNYK_TOKEN: ${{ vars.SNYK_TOKEN }},
-    GITHUB_TOKEN: ${{ vars.GH_TOKEN }},
+    SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }},
+    GITHUB_TOKEN: ${{ secrets.GH_TOKEN }},
     POETRY_VIRTUALENVS_CREATE: false
 
 jobs:
