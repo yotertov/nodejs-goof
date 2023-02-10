@@ -34,8 +34,12 @@ g = {}
 def main(ctx: typer.Context,
     github_token: str = typer.Option(
         None,
-        # envvar="GITHUB_TOKEN",
         envvar="GITHUB_TOKEN",
+        help="GitHub access token, if not set here will load from ENV VAR GITHUB_TOKEN"
+    ),
+    github_org: str = typer.Option(
+        None,
+        envvar="GITHUB_ORG",
         help="GitHub access token, if not set here will load from ENV VAR GITHUB_TOKEN"
     ),
     snyk_token: str = typer.Option(
@@ -65,6 +69,7 @@ def main(ctx: typer.Context,
     use_fresh_issues: bool = (use_fresh_issues.value.lower() in ["true", "True"])
 
     g['github_token'] = github_token
+    g['github_org'] = github_org
     g['snyk_token'] = "6d8b2237-962b-4fbe-8c15-2a89a8849d1d"
     # g['remote_repo_url'] = remote_repo_url
     g['remote_repo_url'] = remote_repo_url
@@ -85,8 +90,8 @@ def main(ctx: typer.Context,
     # g['snyk_client'] = SuperSnykClient(snyk_t)
     # typer.echo("Snyk client created successfully")
     
-    typer.echo("Running GitHub org method ")
-    g['github_org'] = get_github_org_name(g['remote_repo_url'])
+    # typer.echo("Running GitHub org method ")
+    # g['github_org'] = get_github_org_name(g['remote_repo_url'])
 
     
     # g['github_org'] = "rhicksiii91"
