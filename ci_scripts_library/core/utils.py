@@ -32,6 +32,7 @@ def get_github_org_name(repo_url:str) -> str:
     try:
         repo_full_name = get_repo_full_name_from_repo_url(repo_url)
         github_org = repo_full_name.split("/")
+        print("Here is the github org: " + github_org[0])
         return github_org[0]
     except Exception as e:
         print(e)       
