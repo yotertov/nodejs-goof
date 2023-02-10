@@ -34,7 +34,8 @@ g = {}
 def main(ctx: typer.Context,
     github_token: str = typer.Option(
         None,
-        envvar="GITHUB_TOKEN",
+        # envvar="GITHUB_TOKEN",
+        envvar="GH_TOKEN",
         help="GitHub access token, if not set here will load from ENV VAR GITHUB_TOKEN"
     ),
     snyk_token: str = typer.Option(
