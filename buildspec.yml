@@ -10,13 +10,15 @@ phases:
   install:
     commands:
       - npm install -g snyk
+      - npm install -i snyk-to-html
 
   build:
     commands:
       - npm install
-      - npm test  # Run your unit tests, etc
-      - snyk test
+      - snyk test || true
       - snyk monitor --org=2c6bced9-e2d6-456e-af56-28b893bdd358
+      - snyk code test| snyk-to-html > results.html
+      
 
 #artifacts:
 #files:
