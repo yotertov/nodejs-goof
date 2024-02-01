@@ -45,7 +45,7 @@ class Issue():
             title = vuln.get("title")
             package_name = vuln.get("packageName")
             version = vuln.get("version")
-            body.append(f"{title}\nid: {id}\npackage: {package_name}@{version}\n\n")
+            body += (f"{title}\nid: {id}\npackage: {package_name}@{version}\n\n")
         issue_body = {
             "title": f"{len(vulnerabilities)} Critical Vulnerabilities Found",
             "body": body
