@@ -33,9 +33,26 @@ class Issue():
         return headers
 
     def _format_issue_body(self) -> object:
-        print("test", self.scan_data)
+        vulnerabilities = self.scan_data.get("vulnerabilities")
+        if not vulnerabilities:
+            return {
+                "title": "No Security Issues Found",
+                "body": "No action required"
+            }
+        body = ""
+        for vuln in vulnerabilities:
+            id = vuln.get("id")
+            title = vuln.get("title")
+            package_name = vuln.get("packageName")
+            version = vuln.get("version")
+            body.append(f"{title}\nid: {id}\npackage: {package_name}@{version}\n\n")
+        issue_body = {
+            "title": f"{len(vulnerabilities)} Critical Vulnerabilities Found",
+            "body": body
+        }
+        return issue_body   
 
 if __name__ == "__main__":
     issue = Issue(GITHUB_TOKEN)
-    issue._format_issue_body()
+    issue.upload_issue()
     
