@@ -14,3 +14,14 @@ jobs:
         with:
           args: --severity-threshold=critical
                 --json-file-output=snyk.json
+      - name: install requirements
+        with:
+          run: |
+            python3 -m pip install --upgrade pip
+            if [ -f scripts/requirements.txt ]; then pip install -r scripts/requirements.txt; fi          
+      - name: Create issues if vulnerabilies are found
+        id: create_issue
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 scripts/upload_issue.py
