@@ -19,8 +19,8 @@ class Issue():
     
     def upload_issue(self) -> None:
         request_url =f"{self.base_url}/repos/{self.owner}/{self.repo}/issues"
-        body = self._format_issue_body
-        headers = self._format_headers
+        body = self._format_issue_body()
+        headers = self._format_headers()
         response = requests.post(request_url, headers=headers, data=body)
         if not response.ok:
             print(f"Could not create issue. Status code: {response.status_code}, Reason: {response.text}")
