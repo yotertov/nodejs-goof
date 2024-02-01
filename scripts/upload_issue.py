@@ -2,7 +2,7 @@ import os
 import json
 import requests
 
-GITHUB_TOKEN = os.getenv["GITHUB_TOKEN"]
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 
 class Issue():
     def __init__(self, github_token) -> None:
