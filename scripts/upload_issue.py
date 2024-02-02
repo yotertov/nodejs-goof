@@ -37,7 +37,7 @@ class Issue():
         if not vulnerabilities:
             return {
                 "title": "No Security Issues Found",
-                "body": "No action required"
+                "body": "No action required."
             }
         body = ""
         for vuln in vulnerabilities:
