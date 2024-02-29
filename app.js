@@ -55,6 +55,11 @@ var routesUsers = require('./routes/users.js')
 
 // all environments
 app.set('port', process.env.PORT || 3001);
+
+
+
+
+
 app.engine('ejs', ejsEngine);
 app.engine('dust', cons.dust);
 app.engine('hbs', hbs.__express);
@@ -85,6 +90,11 @@ app.post('/create', routes.create);
 app.get('/destroy/:id', routes.destroy);
 app.get('/edit/:id', routes.edit);
 app.post('/update/:id', routes.update);
+
+
+
+
+
 app.post('/import', routes.import);
 app.get('/about_new', routes.about_new);
 app.get('/chat', routes.chat.get);
