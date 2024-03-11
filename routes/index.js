@@ -35,7 +35,7 @@ exports.index = function (req, res, next) {
 };
 
 // Insert new vulnerable code:
-/*
+
 
 exports.loginHandler = function (req, res, next) {
   if (validator.isEmail(req.body.username)) {
@@ -69,7 +69,7 @@ if (validator.isEmail(req.body.username)) {
 } else {
   return res.status(401).send()
 };
-*/
+
 
 function adminLoginSuccess(redirectPage, session, username, res) {
   session.loggedIn = 1
