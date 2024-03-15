@@ -1,0 +1,31 @@
+# Node.js
+# Build a general Node.js project with npm.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
+  displayName: 'Install Node.js'
+  
+- task: SnykSecurityScan@1
+  inputs:
+    serviceConnectionEndpoint: 'Snyk Service Account'
+    testType: 'app'
+    severityThreshold: 'critical'
+    monitorWhen: 'always'
+    failOnIssues: false
+    projectName: 'azure-goof'
+    organization: '6c88bb45-2522-4ef9-b228-595cd7cf832a'
+
+- script: |
+    npm install
+    npm run build
+  displayName: 'npm install and build'
