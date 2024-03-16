@@ -31,6 +31,6 @@ jobs:
       # Run Snyk OS
       - name: Run Snyk OS
         run: |
-          snyk monitor --project-name="GH_ACTION_CI" --severity-threshold=high 
+          snyk test --project-name="GH_ACTION_CI" --severity-threshold=high 
         continue-on-error: true
 
