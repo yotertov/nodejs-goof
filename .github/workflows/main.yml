@@ -22,6 +22,7 @@ jobs:
       - name: Install Snyk & Authenticate
         run: |
           sudo npm install -g snyk
+          sudo npm install -g snyk-delta
           snyk auth ${SNYK_TOKEN}
       # Run Snyk Code
       - name: Run Snyk Code
@@ -31,6 +32,5 @@ jobs:
       # Run Snyk OS
       - name: Run Snyk OS
         run: |
-          snyk test --project-name="GH_ACTION_CI" --severity-threshold=high 
+          snyk test --project-name="GH_ACTION_CI" --json --print-deps | snyk-delta
         continue-on-error: true
-
