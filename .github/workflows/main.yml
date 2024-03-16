@@ -1,4 +1,4 @@
-name: "Snyk Code Scan"
+name: "Snyk Scan"
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 jobs:
   Pipeline-Job:
     # Configure Environment
-    name: 'Snyk Code Scan'
+    name: 'Snyk Scan'
     runs-on: ubuntu-latest
     env:
       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
@@ -27,5 +27,10 @@ jobs:
       - name: Run Snyk Code
         run: |
           snyk code test --report --project-name="GH_ACTION_CI" --severity-threshold=high 
+        continue-on-error: true
+      # Run Snyk OS
+      - name: Run Snyk OS
+        run: |
+          snyk monitor --project-name="GH_ACTION_CI" --severity-threshold=high 
         continue-on-error: true
 
