@@ -2,7 +2,7 @@ name: Snyk Code PR Diff Scan
 
 on:
   pull_request:
-    branches: [ main ]
+   branches: [ main ]
 
 jobs:
   snyk-pipeline:
@@ -10,46 +10,52 @@ jobs:
     name: Snyk Code PR Diff Scan
     env:
       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      
     steps:
-      # Checkout PR branch
-      - name: Checkout PR branch
-        uses: actions/checkout@v2
+    # Checkout base ref branch
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ github.base_ref }}
+    - name: Download Snyk
+      run: |
+         wget -O snyk https://static.snyk.io/cli/latest/snyk-linux
+         chmod +x ./snyk
+         mv ./snyk /usr/local/bin/
 
-      # Download and install Snyk
-      - name: Download and install Snyk
-        run: |
-          wget -O snyk https://static.snyk.io/cli/latest/snyk-linux
-          chmod +x snyk
-          sudo mv snyk /usr/local/bin/
+    - name: Authenticate Snyk
+      run: snyk auth ${SNYK_TOKEN}
 
-      # Authenticate Snyk
-      - name: Authenticate Snyk
-        run: snyk auth $SNYK_TOKEN
+    - name: Run Snyk Code
+      run: snyk code test --json-file-output=${{ github.workspace }}/snyk_code_baseline.json
+      continue-on-error: true
 
-      # Run Snyk Code on PR branch
-      - name: Run Snyk Code on PR branch
-        run: snyk code test --json-file-output=${{ github.workspace }}/snyk_code_pr.json || true
-        continue-on-error: true
+    # Upload the Snyk Code results from the main branch
+    - uses: actions/upload-artifact@v3
+      with:
+         name: snyk_code_baseline
+         path: ${{ github.workspace }}/snyk_code_baseline.json
 
-      # Upload Snyk Code results from PR scan
-      - name: Upload Snyk Code results from PR scan
-        if: success() && steps.snyk-pipeline.outputs.exit-code != 0
-        uses: actions/upload-artifact@v2
-        with:
+    # Checkout PR branch
+    - uses: actions/checkout@v3
+    - name: Authenticate Snyk
+      run: snyk auth ${SNYK_TOKEN}
+
+    - name: Run Snyk Code
+      run: |
+        sleep 10s
+        snyk code test --json-file-output=${{ github.workspace }}/snyk_code_pr.json || true
+      continue-on-error: true
+
+    # Upload the Snyk Code results from the PR scan
+    - uses: actions/upload-artifact@v3
+      with:
           name: snyk_code_pr
           path: ${{ github.workspace }}/snyk_code_pr.json
 
-      # Download Snyk Code results from main branch
-      - name: Download Snyk Code results from main branch
-        if: always()
-        uses: actions/download-artifact@v2
-        with:
-          name: snyk_code_baseline
+    - uses: actions/download-artifact@v3
+      with:
+        name: snyk_code_baseline
 
-      # Check if new issues have been introduced via the PR
-      - name: Check for new issues introduced via the PR
-        if: always()
-        run: |
-          chmod +x ${{ github.workspace }}/.github/snyk-pr-diff-amd64-linux
-          ${{ github.workspace }}/.github/snyk-pr-diff-amd64-linux code ${{ github.workspace }}/snyk_code_baseline.json ${{ github.workspace }}/snyk_code_pr.json
+    - name: Check if new issues have been introduced via the PR
+      run: |
+        chmod +x "${{ github.workspace }}/.github/snyk-pr-diff-amd64-linux"
+        ${{ github.workspace }}/.github/snyk-pr-diff-amd64-linux code ${{ github.workspace }}/snyk_code_baseline.json ${{ github.workspace }}/snyk_code_pr.json
