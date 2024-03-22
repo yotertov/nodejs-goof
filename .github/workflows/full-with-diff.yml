@@ -1,62 +1,53 @@
-name: Snyk Code PR Diff Scan
-
+name: snyk-code-diff-pr-check
 on:
-  push:
-   branches: [ main, demo-branch ]
+  pull_request
 
 jobs:
-  snyk-pipeline:
+  test-only-changes:
     runs-on: ubuntu-latest
-    name: Snyk Code PR Diff Scan
-    env:
-      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-    steps:
-    # Checkout base ref branch
-    - uses: actions/checkout@v3
-      with:
-        ref: ${{ github.base_ref }}
-    - name: Download Snyk
-      run: |
-         wget -O snyk https://static.snyk.io/cli/latest/snyk-linux
-         chmod +x ./snyk
-         mv ./snyk /usr/local/bin/
-         ls -als
+    steps:       
+      - name: checkout
+        uses: actions/checkout@v2
+      
+      - name: setup snyk
+        run: |
+          # download latest snyk cli and make it executable
+          curl https://static.snyk.io/cli/latest/snyk-linux -L -o snyk
+          chmod +x ./snyk
+          mv ./snyk /usr/local/bin/
 
-    - name: Authenticate Snyk
-      run: snyk auth ${SNYK_TOKEN}
+      - name: snyk test
+        run: |
+          # authenticate snyk
+          snyk auth ${{ secrets.SNYK_TOKEN }}
+          # run snyk code test, export output to a sarif file and set it to not fail if issues
+          snyk code test --org=6d36ac7a-c75b-4179-8e73-6dd4d3fc8343 --sarif-file-output=snyk.sarif || true
+          
+      - name: results for changed files
+        run: |
+          curl https://github.com/stedolan/jq/releases/latest/download/jq-linux64 -L -o jq
+          chmod +x ./jq
+          mv ./jq /usr/local/bin/
+          # make our local executable
+          chmod +x "${GITHUB_WORKSPACE}/.github/scripts/codeprcheck.sh"
+          # run codeprcheck.sh which outputs an updated sarif with snyk code results on modified files  
+          # the input for codeprcheck.sh is the sarif file exported from snyk code test 
+          ${GITHUB_WORKSPACE}/.github/scripts/codeprcheck.sh snyk.sarif snykupdated.sarif
+          # list all of the contents of the workspace using long listing format (intended to help confirm updated sarif creation)
+          ls -al
 
-    - name: Run Snyk Code
-      run: snyk code test --json-file-output=${{ github.workspace }}/snyk_code_baseline.json
-      continue-on-error: true
-
-    # Upload the Snyk Code results from the main branch
-    - uses: actions/upload-artifact@v3
-      with:
-         name: snyk_code_baseline
-         path: ${{ github.workspace }}/snyk_code_baseline.json
-
-    # Checkout PR branch
-    - uses: actions/checkout@v3
-    - name: Authenticate Snyk
-      run: snyk auth ${SNYK_TOKEN}
-
-    - name: Run Snyk Code
-      run: |
-        sleep 10s
-        snyk code test --json-file-output=${{ github.workspace }}/snyk_code_pr.json || true
-      continue-on-error: true
-
-    # Upload the Snyk Code results from the PR scan
-    - uses: actions/upload-artifact@v3
-      with:
-          name: snyk_code_pr
-          path: ${{ github.workspace }}/snyk_code_pr.json
-
-    - uses: actions/download-artifact@v3
-      with:
-        name: snyk_code_baseline
-
-    - name: Check if new issues have been introduced via the PR
-      run: |
-        chmod +x "${{ github.workspace }}/.github/snyk-pr-diff-amd64-linux"
-        ${{ github.workspace }}/.github/snyk-pr-diff-amd64-linux code ${{ github.workspace }}/snyk_code_baseline.json ${{ github.workspace }}/snyk_code_pr.json
+      - name: generate snyk report
+        run: |
+          # make our local executable
+          curl https://github.com/snyk/snyk-to-html/releases/latest/download/snyk-to-html-linux -L -o snyk-to-html
+          chmod +x ./snyk-to-html
+          mv ./snyk-to-html /usr/local/bin/
+          snyk-to-html -i snykupdated.sarif > snykreport.html
+          # list all of the contents of the workspace using long listing format (intended to help confirm updated sarif creation)
+          ls -al
+          
+      - name: upload snyk report
+        uses: actions/upload-artifact@v3
+        with:
+          name: snyk-report
+          path: snykreport.html
