@@ -2,7 +2,7 @@ name: Snyk Code PR Diff Scan
 
 on:
   pull_request:
-   branches: [ main ]
+   branches: [ main, demo-branch ]
 
 jobs:
   snyk-pipeline:
