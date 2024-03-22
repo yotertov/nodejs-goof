@@ -1,7 +1,7 @@
 name: Snyk Code PR Diff Scan
 
 on:
-  pull_request:
+  push:
    branches: [ main, demo-branch ]
 
 jobs:
