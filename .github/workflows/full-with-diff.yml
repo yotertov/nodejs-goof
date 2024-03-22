@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:       
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       
       - name: setup snyk
         run: |
@@ -47,7 +47,7 @@ jobs:
           ls -al
           
       - name: upload snyk report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snyk-report
           path: snykreport.html
