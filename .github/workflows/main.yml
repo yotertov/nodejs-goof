@@ -3,7 +3,6 @@ name: "Snyk Scan"
 on:
   push:
     branches:
-      - '*'  # Matches all branches (except those explicitly excluded)
       - '!main'  # Excludes the 'main' branch
 
 jobs:
