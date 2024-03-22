@@ -3,7 +3,7 @@ name: "Snyk Scan"
 on:
   push:
     branches:
-      - '*'
+      - 'demo-branch'
 
 jobs:
   Pipeline-Job:
