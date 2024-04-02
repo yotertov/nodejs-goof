@@ -3,7 +3,6 @@ name: "Snyk Scan"
 on:
   push:
     branches:
-      - '!main'  # Excludes the 'main' branch
       - 'demo*'  # Include any branch starting with demo
 
 jobs:
