@@ -6,9 +6,6 @@
 require('./mongoose-db');
 require('./typeorm-db')
 
-var st = require('st');
-var crypto = require('crypto');
-
 var app = express();
 var routes = require('./routes');
 var routesUsers = require('./routes/users.js')
