@@ -12,7 +12,6 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var ejsEngine = require('ejs-locals');
-var bodyParser = require('body-parser');
 var session = require('express-session')
 var methodOverride = require('method-override');
 var logger = require('morgan');
