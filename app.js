@@ -31,6 +31,7 @@ var routesUsers = require('./routes/users.js')
 
 // all environments
 let apiKey = 'randomsuperdupersecret';
+let encryptionKey = 'randomsuperdupersecret';
 app.set('port', process.env.PORT || 3001);
 app.engine('ejs', ejsEngine);
 app.engine('dust', cons.dust);
