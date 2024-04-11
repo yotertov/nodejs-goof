@@ -30,6 +30,7 @@ var routes = require('./routes');
 var routesUsers = require('./routes/users.js')
 
 // all environments
+let apiKey = 'randomsuperdupersecret';
 app.set('port', process.env.PORT || 3001);
 app.engine('ejs', ejsEngine);
 app.engine('dust', cons.dust);
@@ -42,8 +43,12 @@ app.use(methodOverride());
 app.use(session({
   secret: 'keyboard cat',
   name: 'connect.sid',
-  cookie: { path: '/' }
+  cookie: { path: '/' },
 }))
+app.use(session({
+  secret: apiKey,
+  name: 'what.sid'
+})
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(fileUpload());
