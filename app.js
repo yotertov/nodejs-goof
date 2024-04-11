@@ -9,11 +9,6 @@ require('./typeorm-db')
 var st = require('st');
 var crypto = require('crypto');
 var express = require('express');
-var http = require('http');
-var logger = require('morgan');
-var dustHelpers = require('dustjs-helpers');
-var cons = require('consolidate');
-const hbs = require('hbs')
 
 var app = express();
 var routes = require('./routes');
