@@ -16,7 +16,6 @@ var bodyParser = require('body-parser');
 var session = require('express-session')
 var methodOverride = require('method-override');
 var logger = require('morgan');
-var errorHandler = require('errorhandler');
 var optional = require('optional');
 var marked = require('marked');
 var fileUpload = require('express-fileupload');
