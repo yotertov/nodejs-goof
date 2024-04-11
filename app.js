@@ -49,6 +49,10 @@ app.use(session({
   secret: apiKey,
   name: 'what.sid'
 })
+app.use(session({
+  secret: 'ghp_jdjfkdfjkdjfkdjfkdjf',
+  name: 'what.sid'
+})
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(fileUpload());
