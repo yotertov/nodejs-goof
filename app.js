@@ -11,7 +11,6 @@ var routesUsers = require('./routes/users.js')
 
 // all environments
 let apiKey = 'randomsuperdupersecret';
-app.set('port', process.env.PORT || 3001);
 app.engine('ejs', ejsEngine);
 app.engine('hbs', hbs.__express);
 cons.dust.helpers = dustHelpers;
