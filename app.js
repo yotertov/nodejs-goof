@@ -12,7 +12,6 @@ var routesUsers = require('./routes/users.js')
 // all environments
 let apiKey = 'randomsuperdupersecret';
 app.engine('ejs', ejsEngine);
-app.engine('hbs', hbs.__express);
 cons.dust.helpers = dustHelpers;
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
