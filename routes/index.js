@@ -15,6 +15,14 @@ var validator = require('validator');
 var fileType = require('file-type');
 var AdmZip = require('adm-zip');
 var fs = require('fs');
+var RateLimit = require('express-rate-limit');
+var limiter = new RateLimit({
+  windowMs: parseInt(process.env.WINDOW_MS, 10),
+  max: parseInt(process.env.MAX_IP_REQUESTS, 10),
+  delayMs:parseInt(process.env.DELAY_MS, 10),
+  headers: true
+});
+app.user(limiter);
 
 // prototype-pollution
 var _ = require('lodash');
