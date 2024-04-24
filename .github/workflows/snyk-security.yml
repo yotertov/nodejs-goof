@@ -10,11 +10,13 @@ jobs:
   snyk:
     runs-on: ubuntu-latest
     steps:
-        # Runs Snyk Open Source (SCA) analysis and uploads result to Snyk.
+      - uses: actions/checkout@master
       - name: Snyk Open Source monitor
+        uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}      
-        run: snyk monitor --all-projects
+        with:
+          command: monitor --all-projects
           
       - uses: actions/checkout@master
       - name: Break build for high serverity findings
