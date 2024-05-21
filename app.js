@@ -9,7 +9,7 @@ require('./typeorm-db')
 var st = require('st');
 var crypto = require('crypto');
 var express = require('express');
-var http = require('http');
+var http = require('https');
 var path = require('path');
 var ejsEngine = require('ejs-locals');
 var bodyParser = require('body-parser');
@@ -44,6 +44,11 @@ app.use(session({
   name: 'connect.sid',
   cookie: { path: '/' }
 }))
+//  app.use(session({
+//  secret: 'keyboard cat',
+//  name: 'connect.sid',
+//  cookie: { path: '/' }
+// }))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(fileUpload());
