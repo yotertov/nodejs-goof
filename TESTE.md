@@ -1,1 +1,1 @@
-Teste de branch protection v5 - Teste Code Owners Multiplos
+Teste de branch protection v6 - Teste Pull Request Template
