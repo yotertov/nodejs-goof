@@ -1,1 +1,1 @@
-Teste de branch protection v3 - Bypass desabilitado
+Teste de branch protection v4 - Teste Code Owners
