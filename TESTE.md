@@ -1,1 +1,1 @@
-Teste de branch protection v2 - Aprovacao habilitada
+Teste de branch protection v3 - Bypass desabilitado
