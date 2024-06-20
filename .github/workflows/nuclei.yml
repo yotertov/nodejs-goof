@@ -14,7 +14,7 @@ jobs:
       - name: Nuclei - Vulnerability Scan
         uses: projectdiscovery/nuclei-action@main
         with:
-          target: https://redesigned-spork-x56779pgr93p4xv-3000.app.github.dev/
+          target: https://demo.owasp-juice.shop/
 
       - name: GitHub Workflow artifacts
         uses: actions/upload-artifact@v4
