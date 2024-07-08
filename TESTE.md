@@ -1,1 +1,1 @@
-Teste de branch protection v1
+Teste de branch protection v2 - aprovação habilitada
