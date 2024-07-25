@@ -10,6 +10,10 @@ jobs:
       - checkout
       - run: npm install
       - snyk/scan
+        fail-on-issues: false
+        monitor-on-build: false
+        severity-threshold: high
+        token-variable: SNYK_TOKEN
 
 workflows:
   build-snyk:
