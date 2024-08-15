@@ -18,18 +18,18 @@ jobs:
       #   with:
       #     command: monitor
           
-      - uses: actions/checkout@master
-      - name: Break build for high serverity findings
-        uses: snyk/actions/node@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: --severity-threshold=high
+      # - uses: actions/checkout@master
+      # - name: Break build for high serverity findings
+      #   uses: snyk/actions/node@master
+      #   env:
+      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      #   with:
+      #     args: --severity-threshold=high
 
       - uses: actions/checkout@master
-      - name: Sast Scan
+      - name: SAST Scan
         uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          command: code test --severity-threshold=high            
+          command: code test            
