@@ -1,26 +1,58 @@
+# name: Snyk Security
+
+# on:
+#   push:
+#     branches: ["main" ]
+#   pull_request:
+#     branches: ["main"]
+
+# jobs:
+#   snyk:
+#     runs-on: ubuntu-latest
+#     steps:
+          
+#       - uses: actions/checkout@master
+#       - name: Break build for high serverity findings
+#         uses: snyk/actions/node@master
+#         env:
+#           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+#         with:
+#           args: --severity-threshold=high
+
+#       - uses: actions/checkout@master
+#       - name: SAST Scan
+#         uses: snyk/actions/node@master
+#         env:
+#           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+#         with:
+#           command: code test
+
+
 name: Snyk Security
 
 on:
   push:
-    branches: ["main" ]
+    branches: ["main"]
   pull_request:
     branches: ["main"]
 
 jobs:
-  snyk:
+  snyk_open_source:
     runs-on: ubuntu-latest
     steps:
-          
-      - uses: actions/checkout@master
-      - name: Break build for high serverity findings
+      - uses: actions/checkout@v2
+      - name: Snyk Open Source Scan
         uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           args: --severity-threshold=high
 
-      - uses: actions/checkout@master
-      - name: SAST Scan
+  snyk_code:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Snyk Code Scan
         uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
