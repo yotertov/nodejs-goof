@@ -37,6 +37,7 @@
     "moment": "2.15.1",
     "mongodb": "^3.5.9",
     "mongoose": "4.2.4",
+    "pyyaml": "1.23",
     "morgan": "latest",
     "ms": "^0.7.1",
     "mysql": "^2.18.1",
