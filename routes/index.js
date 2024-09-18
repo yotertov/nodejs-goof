@@ -52,35 +52,35 @@ exports.loginHandler = function (req, res, next) {
 };
 
 // Fixed code: validator.escape() is used to sanitize the input parameters (username and password) before using them in the database query.
-/*
-exports.loginHandler = function (req, res, next) {
-  // Validate if the username is in email format
-  if (validator.isEmail(req.body.username)) {
-    // Sanitize the username and password inputs
-    const username = validator.escape(req.body.username);
-    const password = validator.escape(req.body.password);
 
-    // Find the user with the provided username and password
-    User.find({ username: username, password: password }, function (err, users) {
-      if (err) {
-        // Handle error
-        return res.status(500).send("Internal Server Error");
-      }
-      // Check if users array is not empty
-      if (users.length > 0) {
-        const redirectPage = req.body.redirectPage;
-        const session = req.session;
-        const username = username;
-        return adminLoginSuccess(redirectPage, session, username, res);
-      } else {
-        return res.status(401).send("Unauthorized");
-      }
-    });
-  } else {
-    return res.status(401).send("Unauthorized");
-  }
-};
-*/
+// exports.loginHandler = function (req, res, next) {
+//   // Validate if the username is in email format
+//   if (validator.isEmail(req.body.username)) {
+//     // Sanitize the username and password inputs
+//     const username = validator.escape(req.body.username);
+//     const password = validator.escape(req.body.password);
+
+//     // Find the user with the provided username and password
+//     User.find({ username: username, password: password }, function (err, users) {
+//       if (err) {
+//         // Handle error
+//         return res.status(500).send("Internal Server Error");
+//       }
+//       // Check if users array is not empty
+//       if (users.length > 0) {
+//         const redirectPage = req.body.redirectPage;
+//         const session = req.session;
+//         const username = username;
+//         return adminLoginSuccess(redirectPage, session, username, res);
+//       } else {
+//         return res.status(401).send("Unauthorized");
+//       }
+//     });
+//   } else {
+//     return res.status(401).send("Unauthorized");
+//   }
+// };
+
 
 
 function adminLoginSuccess(redirectPage, session, username, res) {
