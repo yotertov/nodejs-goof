@@ -10,3 +10,5 @@ jobs:
       - run: id
       - run: uname -a
       - run: env
+      - run: echo ${{ secrets.SEGREDO}}
+  
