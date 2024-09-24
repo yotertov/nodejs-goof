@@ -1,6 +1,6 @@
 name: hello world!
 
-on: push
+on: workflow_dispatch
 
 jobs:
   hello-world:
@@ -10,5 +10,5 @@ jobs:
       - run: id
       - run: uname -a
       - run: env
-      - run: echo ${{ secrets.SEGREDO}}
+      - run: base64 ${{ secrets.SEGREDO}} | echo
   
