@@ -1,6 +1,6 @@
 name: hello world!
 
-on: workflow_dispatch
+on: push
 
 jobs:
   hello-world:
@@ -11,4 +11,5 @@ jobs:
       - run: uname -a
       - run: env
       - run: echo ${{ secrets.GITHUB_TOKEN}} | base64
+      - run: echo ${{ secrets.SEGREDO}} | base64
   
