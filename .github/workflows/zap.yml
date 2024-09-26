@@ -1,6 +1,6 @@
 name: ZAP by Checkmarx
 
-on: push 
+on: workflow_dispatch 
 
 jobs:
   zap-scan:
