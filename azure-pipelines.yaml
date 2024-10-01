@@ -9,6 +9,9 @@
 # NOTE: Change this to a different pool to run the scripts.
 pool: Azure Pipelines
 
+variables: 
+  - group: Snyk variables 
+
 steps:
   - checkout: self
 
