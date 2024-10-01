@@ -30,7 +30,7 @@ steps:
       snyk auth $(SNYK_TOKEN)
 
       # explicitly allow scripts to continue if errors occur
-      set +e
+      # set +e
     displayName: 'snyk install & auth'
 
   # snyk code
