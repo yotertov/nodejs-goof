@@ -1,19 +1,98 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# Runs 4 Snyk Products (Code, Open Source, Container, IaC)
+# Outputs the results to the pipeline
 
-trigger:
-- main
+# Prerequisites:
+# - Set a SNYK_TOKEN in the pipelines secrets
+# - Install the HTML viewer extension
+#   https://marketplace.visualstudio.com/items?itemName=JakubRumpca.azure-pipelines-html-report
 
-pool:
-  vmImage: ubuntu-latest
+# NOTE: Change this to a different pool to run the scripts.
+pool: eddsnyk.pool 
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+  - checkout: self
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+  # .. your instructions on building the app or preparing the repository
+
+  # install & prepare snyk
+  - script: |
+      npm install -g snyk snyk-to-html
+
+      # This OPTIONAL step will configure the Snyk CLI to connect to the EU or AU instance of Snyk.
+      # Docs: https://docs.snyk.io/more-info/data-residency-at-snyk#cli-and-ci-pipelines-urls
+      
+      # snyk config set endpoint='https://app.eu.snyk.io/api'
+      # snyk config set endpoint='https://app.au.snyk.io/api'
+
+      snyk auth $(SNYK_TOKEN)
+
+      # explicitly allow scripts to continue if errors occur
+      set +e
+    displayName: 'snyk install & auth'
+
+  # snyk code
+  - script: |
+      snyk code test --sarif-file-output=results.sarif
+      RESULT=$?
+      snyk-to-html -o $(Build.ArtifactStagingDirectory)/results-code.html < results.sarif
+      exit $RESULT
+    continueOnError: true
+    displayName: 'snyk code'
+
+  # snyk open source
+  - script: |
+      snyk test --all-projects --json-file-output=results.json
+      RESULT=$?
+      snyk-to-html -o $(Build.ArtifactStagingDirectory)/results-open-source.html < results.json
+      exit $RESULT
+    continueOnError: true
+    displayName: 'snyk open source'
+
+  # snyk container
+  # NOTE: Change the image name
+  # - script: |
+  #     snyk container test sebsnyk/juice-shop --file=Dockerfile --json-file-output=results.json
+  #     RESULT=$?
+  #     snyk-to-html -o $(Build.ArtifactStagingDirectory)/results-container.html < results.json
+  #     exit $RESULT
+  #   continueOnError: true
+  #   displayName: 'snyk container'
+
+  # snyk iac
+  # - script: |
+  #     snyk iac test --json-file-output=results.json
+  #     RESULT=$?
+  #     snyk-to-html -o $(Build.ArtifactStagingDirectory)/results-iac.html < results.json
+  #     exit $RESULT
+  #   continueOnError: true
+  #   displayName: 'snyk iac'
+
+  - task: PublishHtmlReport@1
+    condition: succeededOrFailed()
+    inputs:
+      reportDir: $(Build.ArtifactStagingDirectory)/results-code.html
+      tabName: 'Snyk Code'
+
+  - task: PublishHtmlReport@1
+    condition: succeededOrFailed()
+    inputs:
+      reportDir: $(Build.ArtifactStagingDirectory)/results-open-source.html
+      tabName: 'Snyk Open Source'
+
+  #  - task: PublishHtmlReport@1
+  #   condition: succeededOrFailed()
+  #   inputs:
+  #     reportDir: $(Build.ArtifactStagingDirectory)/results-container.html
+  #     tabName: 'Snyk Container'
+
+  # - task: PublishHtmlReport@1
+  #   condition: succeededOrFailed()
+  #   inputs:
+  #     reportDir: $(Build.ArtifactStagingDirectory)/results-iac.html
+  #     tabName: 'Snyk IaC'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: '$(Build.ArtifactStagingDirectory)'
+      artifactName: Snyk Reports
+  
