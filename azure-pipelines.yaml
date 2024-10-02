@@ -101,8 +101,8 @@ steps:
   
   # run snyk monitor
   - script: |
-      snyk monitor --all-projects
+      snyk monitor --all-projects --org=1141b3e2-d0e9-43da-af89-49cef9ecac38
       RESULT=$?
       exit $RESULT
-    continueOnError: true
+  #  continueOnError: true
     displayName: 'running snyk monitor'
