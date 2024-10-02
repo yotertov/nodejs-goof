@@ -99,3 +99,10 @@ steps:
       pathToPublish: '$(Build.ArtifactStagingDirectory)'
       artifactName: Snyk Reports
   
+  # run snyk monitor
+  - script: |
+      snyk monitor --all-projects
+      RESULT=$?
+      exit $RESULT
+    continueOnError: true
+    displayName: 'running snyk monitor'
