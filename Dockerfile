@@ -1,4 +1,3 @@
-# FROM node:6-stretch
 FROM node:18.20.2
 
 RUN mkdir /usr/src/goof
