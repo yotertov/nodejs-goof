@@ -3,5 +3,18 @@ on: [push, pull_request]
  jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
     steps:
-    
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm install
+      - run: npm i -g snyk
+      - run: snyk auth ${{ secrets.SNYK_TOKEN }}
+      - run: snyk monitor
+      - run: snyk test
+      - continue-on-error: true
