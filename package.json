@@ -54,4 +54,12 @@
     "snyk": "^1.244.0"
   },
   "license": "Apache-2.0"
-}
+},#.... this is only a snip from the bottom of the file:
+
+"st": "0.2.4",
+    "stream-buffers": "^3.0.1",
+    "tap": "^5.7.0",
+    "tinymce": "4.1.0"
+  },
+  "devDependencies": {
+    "browserify": "^13.1.1"
