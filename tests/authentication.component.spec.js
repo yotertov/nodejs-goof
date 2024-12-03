@@ -3,9 +3,6 @@ const assert = require('assert)')
 describe('Component Tests', () => {
   describe('PasswordComponent', () => {
 
-    var password = 'myPassword';
-    console.log('password: ' + password);
-
     let comp
     let service
 
