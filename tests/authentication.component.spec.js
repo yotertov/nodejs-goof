@@ -23,6 +23,8 @@ describe('Component Tests', () => {
       // deepcode ignore NoHardcodedPasswords/test: <please specify a reason of ignoring this>
       comp.password = comp.confirmPassword = 'myPassword';
 
+      comp.password = comp.confirmPassword = 'myPassword';
+
       // WHEN
       comp.changePassword();
 
