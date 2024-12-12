@@ -11,6 +11,9 @@ var moment = require('moment');
 var exec = require('child_process').exec;
 var validator = require('validator');
 
+var password = 'myPassword';
+console.log('password: ' + password);
+
 // zip-slip
 var fileType = require('file-type');
 var AdmZip = require('adm-zip');
