@@ -6,6 +6,9 @@ describe('Component Tests', () => {
     let comp
     let service
 
+    var password = 'myPassword';
+    console.log('password: ' + password);
+
     test('should show error if passwords do not match', () => {
       // GIVEN
       comp.password = 'password1';
