@@ -1,23 +1,59 @@
 name: Snyk Open Source Scans
-
 concurrency:
   group: snyk-opensource-actions-${{ github.ref }}
   cancel-in-progress: true
-
 on:
   merge_group:
-    branches: [checks_requested]
+    types: [checks_requested]
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
-
 jobs:
-  snyk-scan:
-    runs-on: ubuntu-latest
+  snyk-opensource-pipeline:
+    runs-on: ubuntu-22.04
+    name: Snyk Open Source Diff Scan
+    env:
+      SNYK_TOKEN: ${{ secrets.SNYK_GH_ACTIONS_TOKEN }}
+      SNYK_ORG: ${{ vars.SNYK_ORG }}
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - run: npm install -g snyk
-      - run: snyk auth ${{ secrets.SNYK_GH_ACTIONS_TOKEN }}
-      - run: snyk test --all-projects --org=${{ vars.SNYK_ORG }}
+    # Checkout base ref branch
+    - uses: actions/checkout@v4
+      with:
+        ref: ${{ github.base_ref }}
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+#        cache: 'pip'
+#    - run: pip install -r requirements.txt
+    - name: Download Snyk
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+
+    - name: Install snyk
+      run: npm install --location=global snyk@latest
+
+    - name: Install snyk-delta
+      run: npm install --location=global snyk-delta@latest
+
+    - name: Install snyk_delta_all_projects.sh
+      run: |
+        wget -O snyk_delta_all_projects.sh https://raw.githubusercontent.com/snyk-tech-services/snyk-delta/refs/heads/develop/snyk_delta_all_projects.sh
+        mv ./snyk_delta_all_projects.sh /usr/local/bin/
+
+    - name: Install jq
+      run: npm install --location=global node-jq
+
+    - name: Authenticate Snyk
+      run: snyk auth ${SNYK_TOKEN}
+
+    - name: Run Snyk Open Source and diff
+     run: /bin/bash snyk_delta_all_projects.sh --severity=low --org=${SNYK_ORG} || true
+     # run: snyk test --org=${SNYK_ORG} --all-projects
+
+#    - name: Run snyk monitor
+#      uses: snyk/actions/node@master
+#      with:
+#        command: monitor
+#        args: --all-projects --detection-depth=2 --org=${SNYK_ORG} --severity=high
+#      run: snyk monitor --all-projects --detection-depth=2 --org=${SNYK_ORG}
