@@ -1,0 +1,23 @@
+name: Snyk Open Source Scans
+
+concurrency:
+  group: snyk-opensource-actions-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  merge_group:
+    branches: [checks_requested]
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  snyk-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: npm install -g snyk
+      - run: snyk auth ${{ secrets.SNYK_GH_ACTIONS_TOKEN }}
+      - run: snyk test --all-projects --org=${{ vars.SNYK_ORG }}
