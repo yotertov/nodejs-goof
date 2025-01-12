@@ -30,6 +30,6 @@ jobs:
         env:
           FILE_PATH: ${{ env.FILE_PATH }}
           BLOCK_ID: ${{ env.BLOCK_ID }}
-          TOKEN: ${{ secrets.TOKEN }}
+          TOKEN: ${{ secrets.NOTION_API_SECRET }}
         run: node markdown.mjs
 
