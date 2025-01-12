@@ -27,8 +27,9 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Run the Notion script
-        run: node markdown.mjs
         env:
           FILE_PATH: ${{ env.FILE_PATH }}
-          BLOCK_ID: ${{ env.BLOCK_ID}}
-          TOKEN: ${{ secrets.TOKEN}}
+          BLOCK_ID: ${{ env.BLOCK_ID }}
+          TOKEN: ${{ secrets.TOKEN }}
+        run: node markdown.mjs
+
