@@ -31,4 +31,4 @@ jobs:
         env:
           FILE_PATH: ${{ env.FILE_PATH }}
           BLOCK_ID: ${{ env.BLOCK_ID}}
-          TOKEN: ${{ secret.TOKEN}}
+          TOKEN: ${{ secrets.TOKEN}}
