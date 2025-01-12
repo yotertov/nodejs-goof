@@ -1,0 +1,34 @@
+name: notion-py
+defaults:
+  run:
+    shell: bash
+
+on:
+  pull_request_target:
+    types:
+      - closed
+  workflow_dispatch:
+jobs:
+  DeployToNotion:
+    name: runner / DeployToNotion
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./notion
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Setup node/npm
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm install
+      - name: Run the Notion script
+        run: node markdown.js
+        env:
+          FILE_PATH: "プロダクトセキュリティガイドラインWeb分冊.md"
+          BLOCK_ID: ${{ env.NOTION_PAGE_ID }}
+          TOKEN: ${{ secrets.NOTION_API_SECRET }}
