@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Run the Notion script
-        run: node markdown.js
+        run: node markdown.mjs
         env:
           FILE_PATH: "プロダクトセキュリティガイドラインWeb分冊.md"
           BLOCK_ID: ${{ env.NOTION_PAGE_ID }}
