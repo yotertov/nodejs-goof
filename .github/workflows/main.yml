@@ -29,6 +29,6 @@ jobs:
       - name: Run the Notion script
         run: node markdown.mjs
         env:
-          FILE_PATH: ${{ env.FILE_PATH }}
-          BLOCK_ID: ${{ env.BLOCK_IDD }}
-          TOKEN: ${{ secrets.NOTION_API_SECRET }}
+          FILE_PATH: $FILE_PATH
+          BLOCK_ID: $BLOCK_IDD }}
+          TOKEN: NOTION_API_SECRET
