@@ -28,8 +28,8 @@ jobs:
         run: npm install
       - name: Run the Notion script
         env:
-          FILE_PATH: ${{ env.FILE_PATH }}
-          BLOCK_ID: ${{ env.BLOCK_ID }}
+          FILE_PATH: ${{ vars.FILE_PATH }}
+          BLOCK_ID: ${{ vars.BLOCK_ID }}
           TOKEN: ${{ secrets.NOTION_API_SECRET }}
         run: node markdown.mjs
 
