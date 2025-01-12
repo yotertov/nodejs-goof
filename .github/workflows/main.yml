@@ -29,6 +29,6 @@ jobs:
       - name: Run the Notion script
         run: node markdown.mjs
         env:
-          FILE_PATH: "プロダクトセキュリティガイドラインWeb分冊.md"
+          FILE_PATH: ${{ env.FILE_PATH }}
           BLOCK_ID: ${{ env.NOTION_PAGE_ID }}
           TOKEN: ${{ secrets.NOTION_API_SECRET }}
