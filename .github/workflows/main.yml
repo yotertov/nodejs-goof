@@ -30,5 +30,5 @@ jobs:
         run: node markdown.mjs
         env:
           FILE_PATH: $FILE_PATH
-          BLOCK_ID: $BLOCK_IDD }}
-          TOKEN: NOTION_API_SECRET
+          BLOCK_ID: $BLOCK_ID
+          TOKEN: $NOTION_API_SECRET
