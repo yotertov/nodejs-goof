@@ -5,7 +5,7 @@ import { markdownToBlocks } from '@tryfabric/martian';
 
 const Block_ID = process.env.BLOCK_ID;
 const FILE_Path = process.env.FILE_PATH;
-const Tokne = process.env.TOKEN;
+const Token = process.env.TOKEN;
 
 
 console.log("test")
