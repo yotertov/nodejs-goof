@@ -9,6 +9,6 @@ const TOKEN = process.env.TOKEN;
 
 
 console.log("tst")
-console.log(BLOCK_ID)
-console.log(TOKEN)
-console.log(FILE_PATH)
+console.log(`$BLOCK_ID`)
+console.log(`$TOKEN`)
+console.log('$FILE_PATH')
