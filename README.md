@@ -1,16 +1,19 @@
 # Goof - Snyk's vulnerable demo app
+
 [![Known Vulnerabilities](https://snyk.io/test/github/snyk/goof/badge.svg?style=flat-square)](https://snyk.io/test/github/snyk/goof)
 
 A vulnerable Node.js demo application, based on the [Dreamers Lab tutorial](http://dreamerslab.com/blog/en/write-a-todo-list-with-express-and-mongodb/)
 
 ## Features
 
-This vulnerable app includes the following capabilities to experiment with:
-* [Exploitable packages](#exploiting-the-vulnerabilities) with known vulnerabilities
-* [Docker Image Scanning](#docker-image-scanning) for base images with known vulnerabilities in system libraries
-* [Runtime alerts](#runtime-alerts) for detecting an invocation of vulnerable functions in open source dependencies
+This vulnerable apassa includes the following capabilities to experiment with:
+
+- [Exploitable packages](#exploiting-the-vulnerabilities) with known vulnerabilities
+- [Docker Image Scanning](#docker-image-scanning) for base images with known vulnerabilities in system libraries
+- [Runtime alerts](#runtime-alerts) for detecting an invocation of vulnerable functions in open source dependencies
 
 ## Running
+
 ```bash
 mongod &
 
@@ -18,9 +21,10 @@ git clone https://github.com/snyk-labs/nodejs-goof
 npm install
 npm start
 ```
+
 This will run Goof locally, using a local mongo on the default port and listening on port 3001 (http://localhost:3001)
 
-Note: You *have* to use an old version of MongoDB version due to some of these old libraries' database server APIs. MongoDB 3 is known to work ok.
+Note: You _have_ to use an old version of MongoDB version due to some of these old libraries' database server APIs. MongoDB 3 is known to work ok.
 
 You can also run the MongoDB server individually via Docker, such as:
 
@@ -29,21 +33,26 @@ docker run --rm -p 27017:27017 mongo:3
 ```
 
 ## Running with docker-compose
+
 ```bash
 docker-compose up --build
 docker-compose down
 ```
 
 ### Heroku usage
-Goof requires attaching a MongoLab service to be deployed as a Heroku app. 
-That sets up the MONGOLAB_URI env var so everything after should just work. 
+
+Goof requires attaching a MongoLab service to be deployed as a Heroku app.
+That sets up the MONGOLAB_URI env var so everything after should just work.
 
 ### CloudFoundry usage
-Goof requires attaching a MongoLab service and naming it "goof-mongo" to be deployed on CloudFoundry. 
-The code explicitly looks for credentials to that service. 
+
+Goof requires attaching a MongoLab service and naming it "goof-mongo" to be deployed on CloudFoundry.
+The code explicitly looks for credentials to that service.
 
 ### Cleanup
+
 To bulk delete the current list of TODO items from the DB run:
+
 ```bash
 npm run cleanup
 ```
@@ -58,6 +67,7 @@ The `exploits/` directory includes a series of steps to demonstrate each one.
 ### Vulnerabilities in open source dependencies
 
 Here are the exploitable vulnerable packages:
+
 - [Mongoose - Buffer Memory Exposure](https://snyk.io/vuln/npm:mongoose:20160116) - requires a version <= Node.js 8. For the exploit demo purposes, one can update the Dockerfile `node` base image to use `FROM node:6-stretch`.
 - [st - Directory Traversal](https://snyk.io/vuln/npm:st:20140206)
 - [ms - ReDoS](https://snyk.io/vuln/npm:ms:20151024)
@@ -65,14 +75,14 @@ Here are the exploitable vulnerable packages:
 
 ### Vulnerabilities in code
 
-* Open Redirect
-* NoSQL Injection
-* Code Injection
-* Command execution
-* Cross-site Scripting (XSS)
-* Information exposure via Hardcoded values in code
-* Security misconfiguration exposes server information 
-* Insecure protocol (HTTP) communication 
+- Open Redirect
+- NoSQL Injection
+- Code Injection
+- Command execution
+- Cross-site Scripting (XSS)
+- Information exposure via Hardcoded values in code
+- Security misconfiguration exposes server information
+- Insecure protocol (HTTP) communication
 
 #### Code injection
 
@@ -110,19 +120,21 @@ curl -X 'POST' -H 'Content-Type: application/json' --data-binary "{\"email\": \"
 A POST request to `/login` will allow for authentication and signing-in to the system as an administrator user.
 It works by exposing `loginHandler` as a controller in `routes/index.js` and uses a MongoDB database and the `User.find()` query to look up the user's details (email as a username and password). One issue is that it indeed stores passwords in plaintext and not hashing them. However, there are other issues in play here.
 
-
 We can send a request with an incorrect password to see that we get a failed attempt
+
 ```sh
 echo '{"username":"admin@snyk.io", "password":"WrongPassword"}' | http --json $GOOF_HOST/login -v
 ```
 
 And another request, as denoted with the following JSON request to sign-in as the admin user works as expected:
+
 ```sh
 echo '{"username":"admin@snyk.io", "password":"SuperSecretPassword"}' | http --json $GOOF_HOST/login -v
 ```
 
 However, what if the password wasn't a string? what if it was an object? Why would an object be harmful or even considered an issue?
 Consider the following request:
+
 ```sh
 echo '{"username": "admin@snyk.io", "password": {"$gt": ""}}' | http --json $GOOF_HOST/login -v
 ```
@@ -151,20 +163,23 @@ To exploit the open redirect, simply provide a URL such as `redirectPage=https:/
 The application initializes a cookie-based session on `app.js:40` as follows:
 
 ```js
-app.use(session({
-  secret: 'keyboard cat',
-  name: 'connect.sid',
-  cookie: { secure: true }
-}))
+app.use(
+  session({
+    secret: "keyboard cat",
+    name: "connect.sid",
+    cookie: { secure: true },
+  })
+);
 ```
 
 As you can see, the session `secret` used to sign the session is a hardcoded sensitive information inside the code.
 
 First attempt to fix it, can be to move it out to a config file such as:
+
 ```js
 module.exports = {
-    cookieSecret: `keyboard cat`
-}
+  cookieSecret: `keyboard cat`,
+};
 ```
 
 And then require the configuration file and use it to initialize the session.
@@ -179,11 +194,13 @@ Snyk Code will also find hardcoded secrets in source code that isn't part of the
 The `Dockerfile` makes use of a base image (`node:6-stretch`) that is known to have system libraries with vulnerabilities.
 
 To scan the image for vulnerabilities, run:
+
 ```bash
 snyk test --docker node:6-stretch --file=Dockerfile
 ```
 
 To monitor this image and receive alerts with Snyk:
+
 ```bash
 snyk monitor --docker node:6-stretch
 ```
@@ -197,14 +214,17 @@ The agent is installed and initialized in [app.js](./app.js#L5).
 For the agent to report back to your snyk account on the vulnerabilities it detected it needs to know which project on Snyk to associate with the monitoring. Due to that, we need to provide it with the project id through an environment variable `SNYK_PROJECT_ID`
 
 To run the Node.js app with runtime monitoring:
+
 ```bash
 SNYK_PROJECT_ID=<PROJECT_ID> npm start
 ```
 
-** The app will continue to work normally even if it's not provided a project id
+\*\* The app will continue to work normally even if it's not provided a project id
 
 ## Fixing the issues
+
 To find these flaws in this application (and in your own apps), run:
+
 ```
 npm install -g snyk
 snyk wizard
