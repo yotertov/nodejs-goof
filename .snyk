@@ -10,4 +10,9 @@ ignore:
         reason: testing
         expires: 2025-01-16T00:00:00.000Z
         created: 2025-01-14T12:01:29.827Z
+  SNYK-JS-UNSETVALUE-2400660:
+    - webpack@4.46.0 > * > unset-value@1.0.0:
+        reason: Module not included in built image or used at runtime
+        expires: 2023-04-20T20:43:37.856Z
+        created: 2023-03-21T20:43:37.860Z
 patch: {}
