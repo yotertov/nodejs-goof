@@ -9,6 +9,15 @@ var streamBuffers = require('stream-buffers');
 var readline = require('readline');
 var moment = require('moment');
 var exec = require('child_process').exec;
+var RateLimit = require('express-rate-limit');
+var limiter = new RateLimit({
+  windowMs: parseInt(process.env.WINDOW_MS, 10),
+  max: parseInt(process.env.MAX_IP_REQUESTS, 10),
+  delayMs:parseInt(process.env.DELAY_MS, 10),
+  headers: true
+});
+
+app.use(limiter);
 var validator = require('validator');
 
 // zip-slip
@@ -158,7 +167,7 @@ exports.create = function (req, res, next) {
     var url = item.match(imgRegex)[1];
     console.log('found img: ' + url);
 
-    exec('identify ' + url, function (err, stdout, stderr) {
+    exec('identify'+ url, function (err, stdout, stderr) {
       console.log(err);
       if (err !== null) {
         console.log('Error (' + err + '):' + stderr);
