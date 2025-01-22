@@ -16,9 +16,6 @@ var fileType = require('file-type');
 var AdmZip = require('adm-zip');
 var fs = require('fs');
 
-// prototype-pollution
-var _ = require('lodash');
-
 exports.index = function (req, res, next) {
   Todo.
     find({}).
@@ -344,11 +341,10 @@ exports.chat = {
       icon: '👋',
     };
 
-    _.merge(message, req.body.message, {
-      id: lastId++,
-      timestamp: Date.now(),
-      userName: user.name,
-    });
+    message = {message, ...req.body.message};
+    message.id = lastId++;
+    message.timestamp = Date.now();
+    message.userName = user.name;
 
     messages.push(message);
     res.send({ ok: true });
