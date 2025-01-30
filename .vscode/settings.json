@@ -1,0 +1,4 @@
+{
+    "snyk.advanced.customEndpoint": "https://api.polaris-pre-prod.snyk.io",
+    "snyk.advanced.organization": "b6ff4587-e17d-473d-ba0f-515e0866fa19"
+}
