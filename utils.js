@@ -24,6 +24,7 @@ module.exports = {
     res.setHeader( 'Content-Type', 'text/plain' );
     res.setHeader( 'Content-Length', body.length );
     res.end( body );
+
   },
 
   vulnerableEval: function (input) {
@@ -39,3 +40,7 @@ module.exports = {
         console.error(`Error: ${error.message}`);
         return;
       }
+
+  }
+};
+ 
