@@ -29,5 +29,13 @@ module.exports = {
   vulnerableEval: function (input) {
     // ⚠️ This is a simulated vulnerability for testing purposes only
     eval(input); // Potential code injection vulnerability
-  }
-};
+  },
+
+  runCommand: function (cmd) {
+    // ⚠️ Simulated vulnerability: command injection
+    const { exec } = require('child_process');
+    exec(cmd, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Error: ${error.message}`);
+        return;
+      }
