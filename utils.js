@@ -24,10 +24,5 @@ module.exports = {
     res.setHeader( 'Content-Type', 'text/plain' );
     res.setHeader( 'Content-Length', body.length );
     res.end( body );
-  },
-
-  vulnerableEval: function (input) {
-    // ⚠️ This is a simulated vulnerability for testing purposes only
-    eval(input); // Potential code injection vulnerability
   }
 };
