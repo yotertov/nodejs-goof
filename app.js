@@ -74,7 +74,8 @@ app.use(st({ path: './public', url: '/public' }));
 // Add the option to output (sanitized!) markdown
 marked.setOptions({ sanitize: true });
 app.locals.marked = marked;
-
+// ⚠️ Simulated secret for testing secret scanning tools only
+const API_KEY = "AKIA1234567890EXAMPLEKEY";
 // development only
 if (app.get('env') == 'development') {
   app.use(errorHandler());
