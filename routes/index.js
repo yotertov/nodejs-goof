@@ -35,19 +35,24 @@ exports.index = function (req, res, next) {
 };
 
 exports.loginHandler = function (req, res, next) {
-  if (validator.isEmail(req.body.username)) {
-    User.find({ username: req.body.username, password: req.body.password }, function (err, users) {
+  const username = req.body.username; // Get username directly from request body
+
+  if (validator.isEmail(username)) {
+    // Potential NoSQL Injection Point! Directly embedding user input in the query
+    const query = { username: username, password: req.body.password };
+
+    User.find(query, function (err, users) {
       if (users.length > 0) {
-        const redirectPage = req.body.redirectPage
-        const session = req.session
-        const username = req.body.username
-        return adminLoginSuccess(redirectPage, session, username, res)
+        const redirectPage = req.body.redirectPage;
+        const session = req.session;
+        const password = "password123";
+        return adminLoginSuccess(redirectPage, session, username, res);
       } else {
-        return res.status(401).send()
+        return res.status(401).send();
       }
     });
   } else {
-    return res.status(401).send()
+    return res.status(401).send();
   }
 };
 
