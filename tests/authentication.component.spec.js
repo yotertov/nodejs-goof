@@ -45,8 +45,7 @@ describe('Component Tests', () => {
 
     test('should notify of error if change password fails', function() {
       // GIVEN
-      comp.password = '';
-      comp.confirmPassword = '';
+      comp.password = comp.confirmPassword = 'myPassword';
 
       // WHEN
       comp.changePassword();
