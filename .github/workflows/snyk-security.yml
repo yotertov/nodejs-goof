@@ -54,8 +54,11 @@ jobs:
       - name: Install deps
         run: npm install
 
-      - name: Install Snyk
+      - name: Auth Snyk
         run: snyk auth ${{ secrets.SNYK_TOKEN }}
+
+      - name: Install Snyk html
+        run: noms install snyk snyk-to-html -g
 
         # Runs Snyk Code (SAST) analysis and uploads result into GitHub.
         # Use || true to not fail the pipeline
