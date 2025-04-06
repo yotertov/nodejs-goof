@@ -68,6 +68,15 @@ jobs:
         # Runs Snyk Open Source (SCA) analysis and uploads result to Snyk.
       - name: Snyk Open Source test
         run: snyk test --json | snyk-to-html -o results_SCA.html || true
+
+        # Upload the generated HTML files as artifacts
+      - name: Upload Snyk HTML reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: snyk-reports
+          path: |
+            results_SAST.html
+            results_SCA.html
         # Runs Snyk Infrastructure as Code (IaC) analysis and uploads result to Snyk.
         # Use || true to not fail the pipeline.
       # - name: Snyk IaC test and report
