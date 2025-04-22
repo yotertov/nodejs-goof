@@ -1,0 +1,43 @@
+name: Snyk Security Scan
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  security:
+    name: Snyk Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Set up Snyk CLI
+        uses: snyk/actions/setup@master
+
+      - name: Run Snyk scan
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: snyk test
+
+      - name: Generate Snyk HTML report (optional)
+        run: |
+          npm install -g snyk-to-html
+          snyk test --json | snyk-to-html -o snyk_report.html
+
+      - name: Upload HTML report (optional)
+        uses: actions/upload-artifact@v3
+        with:
+          name: snyk-report
+          path: snyk_report.html
