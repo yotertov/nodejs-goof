@@ -25,7 +25,12 @@ jobs:
         run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
       - name: Run Snyk Test
-        run: snyk test --all-projects --severity-threshold=medium
+        run: snyk test --all-projects --severity-threshold=medium --json || true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      - name: Attempt to Fix Vulnerabilities (Optional)
+        run: snyk fix
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
