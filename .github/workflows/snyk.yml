@@ -29,11 +29,6 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-      - name: Attempt to Fix Vulnerabilities (Optional)
-        run: snyk fix
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
       - name: Run Snyk Monitor (Optional)
         run: snyk monitor --all-projects
         env:
