@@ -1,31 +1,49 @@
-version: "2"
+version: "3.8"
 services:
   goof:
     build: .
     container_name: goof
     environment:
       - DOCKER=1
+      - MYSQL_HOST=goof-mysql
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_DATABASE=acme
     ports:
       - "3001:3001"
       - "9229:9229"
     depends_on:
-      - goof-mongo
-      - goof-mysql
-    links:
-      - goof-mongo
-      - goof-mysql
+      goof-mysql:
+        condition: service_healthy
+      goof-mongo:
+        condition: service_started
+    networks:
+      - goof-network
 
   goof-mongo:
     image: arm64v8/mongo:4.4
     container_name: goof-mongo
     ports:
       - "27017:27017"
+    networks:
+      - goof-network
 
   goof-mysql:
-    image: arm64v8/mysql:5.7
+    image: mysql:8.0
     container_name: goof-mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: acme
     ports:
       - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      timeout: 3s
+      retries: 10
+      interval: 3s
+    networks:
+      - goof-network
+
+networks:
+  goof-network:
+    driver: bridge
