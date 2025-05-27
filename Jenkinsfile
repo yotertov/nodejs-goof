@@ -1,54 +1,31 @@
 pipeline {
-    agent any
-    stages {
-        stage('Checkout') {
-            steps {
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: '*/main']],
-                    doGenerateSubmoduleConfigurations: false,
-                    extensions: [],
-                    userRemoteConfigs: [[
-                        url: 'https://github.com/greenboy106/8.2CDevSecOps.git',
-                        credentialsId: 'github-creds'
-                    ]]
-                ])
-            }
-        }
-        stage('Build') {
-            steps {
-                sh 'npm install'
-            }
-        }
-        stage('Unit & Integration Tests') {
-            steps {
-                sh 'npm test || true'
-            }
-        }
-        stage('Static Code Analysis') {
-            steps {
-                echo 'Static analysis placeholder - add your tool here'
-            }
-        }
-        stage('Security Scan') {
-            steps {
-                sh 'npm audit --audit-level=low || true'
-            }
-        }
-        stage('Deploy to Staging') {
-            steps {
-                echo 'Deploying to staging environment...'
-            }
-        }
-        stage('Smoke Tests on Staging') {
-            steps {
-                echo 'Running smoke tests on staging...'
-            }
-        }
-        stage('Deploy to Production') {
-            steps {
-                echo 'Deploying to production environment...'
-            }
-        }
-    }
+ agent any
+ stages {
+ stage('Checkout') {
+ steps {
+ git branch: 'main', url: ' https://github.com/your_github_username/8.2CDevSecOps.git'
+ }
+ }
+ stage('Install Dependencies') {
+ steps {
+ sh 'npm install'
+ }
+ }
+ stage('Run Tests') {
+ steps {
+ sh 'npm test || true' // Allows pipeline to continue despite test failures
+ }
+ }
+ stage('Generate Coverage Report') {
+ steps {
+ // Ensure coverage report exists
+ sh 'npm run coverage || true'
+ }
+ }
+ stage('NPM Audit (Security Scan)') {
+ steps {
+ sh 'npm audit || true' // This will show known CVEs in the output
+ }
+ }
+ }
 }
