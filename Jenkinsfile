@@ -20,7 +20,6 @@ pipeline {
         }
         stage('Unit & Integration Tests') {
             steps {
-                // Runs tests; '|| true' ensures pipeline continues if tests fail
                 sh 'npm test || true'
             }
         }
@@ -37,36 +36,26 @@ pipeline {
         stage('Deploy to Staging') {
             steps {
                 echo 'Deploying to staging environment...'
-                // Add your real deploy commands here
             }
         }
         stage('Smoke Tests on Staging') {
             steps {
                 echo 'Running smoke tests on staging...'
-                // Add real smoke test commands here
             }
         }
         stage('Deploy to Production') {
             steps {
                 echo 'Deploying to production environment...'
-                // Add your real deploy commands here
             }
         }
         stage('SonarCloud Analysis') {
           environment {
             SONAR_TOKEN = credentials('SONAR_TOKEN')
-              }
-              steps {
-                        sh '''
-      # Download SonarScanner CLI (command-line tool)
-      wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
-      
-      # Unzip the downloaded file
-      unzip -o sonar-scanner-cli-4.8.0.2856-linux.zip
-      
-      # Run the SonarScanner CLI to analyze your code and send results to SonarCloud
-      ./sonar-scanner-4.8.0.2856-linux/bin/sonar-scanner
-    '''
+          }
+          steps {
+            docker.image('sonarsource/sonar-scanner-cli:latest').inside {
+              sh 'sonar-scanner'
+            }
           }
         }
     }
