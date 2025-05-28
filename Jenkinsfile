@@ -47,7 +47,7 @@ pipeline {
             unzip -o sonar-scanner.zip
             
             # Run SonarScanner
-            ./sonar-scanner-4.8.0.2856-macosx/bin/sonar-scanner \
+            ./sonar-scanner-4.8.0.2856-linux/bin/sonar-scanner \
               -Dsonar.projectKey=your_project_key \
               -Dsonar.organization=your_organization_name \
               -Dsonar.host.url=https://sonarcloud.io \
