@@ -41,13 +41,13 @@ pipeline {
         script {
             sh '''
             # Download SonarScanner CLI for macOS (Intel/M1 compatible)
-            curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
+            curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli-7.1.0.4889-linux-aarch64.zip
             
             # Unzip (overwrite if exists)
             unzip -o sonar-scanner.zip
             
             # Run SonarScanner
-            ./sonar-scanner-4.8.0.2856-linux/bin/sonar-scanner \
+            ./sonar-scanner-cli-7.1.0.4889-linux-aarch64/bin/sonar-scanner \
               -Dsonar.projectKey=your_project_key \
               -Dsonar.organization=your_organization_name \
               -Dsonar.host.url=https://sonarcloud.io \
