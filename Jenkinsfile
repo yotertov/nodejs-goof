@@ -40,11 +40,10 @@ pipeline {
     steps {
         script {
             sh '''
-            curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux-aarch64.zip
-          unzip sonar-scanner.zip
-          chmod +x sonar-scanner-4.8.0.2856-linux-aarch64/bin/sonar-scanner
-          java -version
-          ./sonar-scanner-4.8.0.2856-linux-aarch64/bin/sonar-scanner \
+            curl -O https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-7.1.0.4889-linux-aarch64.zip
+            unzip sonar-scanner-cli-7.1.0.4889-linux-aarch64.zip
+          chmod +x sonar-scanner-cli-7.1.0.4889-linux-aarch64/bin/sonar-scanner
+          ./sonar-scanner-cli-7.1.0.4889-linux-aarch64/bin/sonar-scanner \
             -Dsonar.projectKey=your_project_key \
             -Dsonar.organization=your_org \
             -Dsonar.host.url=https://sonarcloud.io \
