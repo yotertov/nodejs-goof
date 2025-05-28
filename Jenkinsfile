@@ -25,6 +25,7 @@ pipeline {
                 snyk auth $SNYK_TOKEN
                 npm test
               '''
+                }
             }
         }
 
