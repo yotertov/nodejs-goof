@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        SONAR_TOKEN = credentials('SONAR_TOKEN')
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -8,7 +11,7 @@ pipeline {
                     branches: [[name: '*/main']],
                     userRemoteConfigs: [[
                         url: 'https://github.com/greenboy106/8.2CDevSecOps.git',
-                        credentialsId: 'github-creds'
+                        credentialsId: 'github-creds'  // Ensure this credential exists or remove if public repo
                     ]]
                 ])
             }
@@ -49,16 +52,9 @@ pipeline {
             }
         }
         stage('SonarCloud Analysis') {
-          environment {
-            SONAR_TOKEN = credentials('SONAR_TOKEN')
-          }
-          steps {
-              script{
-                docker.image('sonarsource/sonar-scanner-cli:latest').inside {
-              sh 'sonar-scanner'
-                }
+            steps {
+                sh 'sonar-scanner'
             }
-          }
         }
     }
 }
