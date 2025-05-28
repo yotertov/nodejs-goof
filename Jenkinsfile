@@ -15,7 +15,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'npm run build || echo "Build step placeholder"'
+                sh 'npm run build || true'
             }
         }
 
@@ -60,13 +60,6 @@ pipeline {
                 sh 'npm run coverage || true'
             }
         }
-
-        stage('Build') {
-            steps {
-                sh 'npm run build || true'
-            }
-        }
-
 
         stage('SonarCloud Analysis') {
             steps {
