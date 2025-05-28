@@ -52,5 +52,22 @@ pipeline {
                 // Add your real deploy commands here
             }
         }
+        stage('SonarCloud Analysis') {
+          environment {
+            SONAR_TOKEN = credentials('SONAR_TOKEN')
+              }
+              steps {
+                        sh '''
+      # Download SonarScanner CLI (command-line tool)
+      wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
+      
+      # Unzip the downloaded file
+      unzip -o sonar-scanner-cli-4.8.0.2856-linux.zip
+      
+      # Run the SonarScanner CLI to analyze your code and send results to SonarCloud
+      ./sonar-scanner-4.8.0.2856-linux/bin/sonar-scanner
+    '''
+          }
+        }
     }
 }
