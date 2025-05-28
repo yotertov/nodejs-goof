@@ -40,21 +40,17 @@ pipeline {
     steps {
         script {
             sh '''
-            # Download SonarScanner CLI for macOS (Intel/M1 compatible)
-            curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli-4.8.0.2856-linux-aarch64.zip
-            
-            # Unzip (overwrite if exists)
-            unzip -o sonar-scanner.zip
-            
-            # Run SonarScanner
-            ./sonar-scanner-cli-4.8.0.2856-linux-aarch64/bin/sonar-scanner \
-              -Dsonar.projectKey=your_project_key \
-              -Dsonar.organization=your_organization_name \
-              -Dsonar.host.url=https://sonarcloud.io \
-              -Dsonar.login=$SONAR_TOKEN \
-              -Dsonar.sources=. \
-              -Dsonar.exclusions=node_modules/**,test/** \
-              -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+            curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux-aarch64.zip
+          unzip sonar-scanner.zip
+          chmod +x sonar-scanner-4.8.0.2856-linux-aarch64/bin/sonar-scanner
+          java -version
+          ./sonar-scanner-4.8.0.2856-linux-aarch64/bin/sonar-scanner \
+            -Dsonar.projectKey=your_project_key \
+            -Dsonar.organization=your_org \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.login=$SONAR_TOKEN \
+            -Dsonar.sources=. \
+            -Dsonar.exclusions=node_modules/**,test/**
             '''
         }
     }
