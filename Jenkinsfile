@@ -43,8 +43,8 @@ pipeline {
             unzip sonar-scanner-cli-7.1.0.4889-linux-aarch64.zip
           chmod +x sonar-scanner-cli-7.1.0.4889-linux-aarch64/bin/sonar-scanner
           ./sonar-scanner-cli-7.1.0.4889-linux-aarch64/bin/sonar-scanner \
-            -Dsonar.projectKey=your_project_key \
-            -Dsonar.organization=your_org \
+            -Dsonar.projectKey=e16a4a978fab88d437078b4b4252d9dd91e1f0a9 \
+            -Dsonar.organization=greenboy106 \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=$SONAR_TOKEN \
             -Dsonar.sources=. \
