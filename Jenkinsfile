@@ -38,22 +38,21 @@ pipeline {
         stage('SonarCloud Analysis') {
   steps {
     script {
-            sh '''
-            curl -O https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-7.1.0.4889-linux-aarch64.zip
-            unzip sonar-scanner-cli-7.1.0.4889-linux-aarch64.zip
-          chmod +x sonar-scanner-cli-7.1.0.4889-linux-aarch64/bin/sonar-scanner
-          ./sonar-scanner-cli-7.1.0.4889-linux-aarch64/bin/sonar-scanner \
-            -Dsonar.projectKey=e16a4a978fab88d437078b4b4252d9dd91e1f0a9 \
-            -Dsonar.organization=greenboy106 \
-            -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.login=$SONAR_TOKEN \
-            -Dsonar.sources=. \
-            -Dsonar.exclusions=node_modules/**,test/**
-            '''
-        }
+      sh """
+      curl -O https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-7.1.0.4889-linux.zip
+      unzip sonar-scanner-cli-7.1.0.4889-linux.zip
+      chmod +x sonar-scanner-cli-7.1.0.4889-linux/bin/sonar-scanner
+      ./sonar-scanner-cli-7.1.0.4889-linux/bin/sonar-scanner \
+        -Dsonar.projectKey=e16a4a978fab88d437078b4b4252d9dd91e1f0a9 \
+        -Dsonar.organization=greenboy106 \
+        -Dsonar.host.url=https://sonarcloud.io \
+        -Dsonar.login=${SONAR_TOKEN} \
+        -Dsonar.sources=. \
+        -Dsonar.exclusions=node_modules/**,test/**
+      """
     }
+  }
+}   
 }
-
-    }
 }
 }
