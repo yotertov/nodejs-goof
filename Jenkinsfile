@@ -53,8 +53,10 @@ pipeline {
             SONAR_TOKEN = credentials('SONAR_TOKEN')
           }
           steps {
-            docker.image('sonarsource/sonar-scanner-cli:latest').inside {
+              script{
+                docker.image('sonarsource/sonar-scanner-cli:latest').inside {
               sh 'sonar-scanner'
+                }
             }
           }
         }
