@@ -15,25 +15,25 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'npm run build || true'
+                sh 'npm run build'
             }
         }
 
         stage('Unit and Integration Tests') {
             steps {
-                sh 'npm test || true'
+                sh 'npm test'
             }
         }
 
         stage('Code Analysis') {
             steps {
-                sh 'npm run lint || echo "Code analysis placeholder"'
+                sh 'npm run lint'
             }
         }
 
         stage('Security Scan') {
             steps {
-                sh 'npm audit || true'
+                sh 'npm audit'
             }
         }
 
@@ -57,7 +57,7 @@ pipeline {
 
         stage('Generate Coverage Report') {
             steps {
-                sh 'npm run coverage || true'
+                sh 'npm run coverage'
             }
         }
 
