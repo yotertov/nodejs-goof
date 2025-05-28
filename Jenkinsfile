@@ -2,13 +2,13 @@ pipeline {
     agent any
     
     environment {
-        SONAR_TOKEN = credentials('SONAR_TOKEN') // securely inject SonarCloud token
+        SONAR_TOKEN = credentials('SONAR_TOKEN') 
     }
     
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/your_github_username/8.2CDevSecOps.git'
+                git branch: 'main', url: 'https://github.com/greenboy106/8.2CDevSecOps.git'
             }
         }
         
@@ -20,7 +20,7 @@ pipeline {
         
         stage('Run Tests') {
             steps {
-                sh 'npm test || true'  // continue even if tests fail
+                sh 'npm test || true' 
             }
         }
         
