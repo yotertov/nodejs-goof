@@ -41,7 +41,7 @@ pipeline {
         script {
             sh '''
             # Download SonarScanner CLI for macOS (Intel/M1 compatible)
-            curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-macosx.zip
+            curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
             
             # Unzip (overwrite if exists)
             unzip -o sonar-scanner.zip
