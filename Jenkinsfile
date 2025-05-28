@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment {
-        SONAR_TOKEN = credentials('SONAR_TOKEN') 
+        SONAR_TOKEN = credentials('SONAR_TOKEN')
     }
     
     stages {
@@ -20,7 +20,7 @@ pipeline {
         
         stage('Run Tests') {
             steps {
-                sh 'npm test || true' 
+                sh 'npm test || true'
             }
         }
         
@@ -39,7 +39,8 @@ pipeline {
         stage('SonarCloud Analysis') {
             steps {
                 script {
-                    sh """
+                    sh '''
+                    set -ex
                     curl -O https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-7.1.0.4889-linux.zip
                     unzip sonar-scanner-cli-7.1.0.4889-linux.zip
                     chmod +x sonar-scanner-cli-7.1.0.4889-linux/bin/sonar-scanner
@@ -50,7 +51,7 @@ pipeline {
                       -Dsonar.login=${SONAR_TOKEN} \
                       -Dsonar.sources=. \
                       -Dsonar.exclusions=node_modules/**,test/**
-                    """
+                    '''
                 }
             }
         }
