@@ -61,6 +61,13 @@ pipeline {
             }
         }
 
+        stage('Build') {
+            steps {
+                sh 'npm run build || true'
+            }
+        }
+
+
         stage('SonarCloud Analysis') {
             steps {
                 script {
