@@ -1,41 +1,66 @@
 pipeline {
     agent any
-    
+
     environment {
         SONAR_TOKEN = credentials('SONAR_TOKEN')
     }
-    
+
     stages {
+
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/greenboy106/8.2CDevSecOps.git'
             }
         }
-        
-        stage('Install Dependencies') {
+
+        stage('Build') {
             steps {
-                sh 'npm install'
+                sh 'npm run build || echo "Build step placeholder"'
             }
         }
-        
-        stage('Run Tests') {
+
+        stage('Unit and Integration Tests') {
             steps {
                 sh 'npm test || true'
             }
         }
-        
+
+        stage('Code Analysis') {
+            steps {
+                sh 'npm run lint || echo "Code analysis placeholder"'
+            }
+        }
+
+        stage('Security Scan') {
+            steps {
+                sh 'npm audit || true'
+            }
+        }
+
+        stage('Deploy to Staging') {
+            steps {
+                sh 'echo "Deploying application to staging server - placeholder"'
+            }
+        }
+
+        stage('Integration Tests on Staging') {
+            steps {
+                sh 'echo "Running integration tests on staging - placeholder"'
+            }
+        }
+
+        stage('Deploy to Production') {
+            steps {
+                sh 'echo "Deploying application to production server - placeholder"'
+            }
+        }
+
         stage('Generate Coverage Report') {
             steps {
                 sh 'npm run coverage || true'
             }
         }
-        
-        stage('NPM Audit (Security Scan)') {
-            steps {
-                sh 'npm audit || true'
-            }
-        }
-        
+
         stage('SonarCloud Analysis') {
             steps {
                 script {
