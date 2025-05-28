@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        SONAR_TOKEN = credentials('SONAR_TOKEN') // Replace with your Jenkins credential ID
+        SONAR_TOKEN = credentials('SONAR_TOKEN')
     }
 
     stages {
@@ -20,7 +20,11 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh 'npm test'
+                withCredentials([string(credentialsId: 'snyk-token', variable: 'SNYK_TOKEN')]) {
+              sh '''
+                snyk auth $SNYK_TOKEN
+                npm test
+              '''
             }
         }
 
