@@ -35,25 +35,28 @@ pipeline {
 
   post {
     always {
-      emailext(
-        subject: "Jenkins Build - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-        body: """
-        Hello,
+      script {
+        try {
+          emailext(
+            subject: "Jenkins Build - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+            body: """
+            Hello,
 
-        Jenkins has completed a build for the project: ${env.JOB_NAME}
-        Result: ${currentBuild.currentResult}
+            Jenkins has completed a build for the project: ${env.JOB_NAME}
+            Result: ${currentBuild.currentResult}
 
-        You can view the full console output here:
-        ${env.BUILD_URL}console
+            You can view the full console output here:
+            ${env.BUILD_URL}console
 
-        Regards,
-        Jenkins Server
-        """,
-        to: "giabao157248@gmail.com"
-      )
+            Regards,
+            Jenkins Server
+            """,
+            to: "giabao157248@gmail.com"
+          )
         } catch (e) {
-      echo "Failed to send email: ${e.message}"
+          echo "Failed to send email: ${e.message}"
+        }
+      }
     }
   }
-}
 }
