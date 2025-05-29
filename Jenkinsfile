@@ -51,6 +51,9 @@ pipeline {
         """,
         to: "giabao157248@gmail.com"
       )
+        } catch (e) {
+      echo "Failed to send email: ${e.message}"
     }
   }
+}
 }
