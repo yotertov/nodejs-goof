@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-IMAGE_NAME=478468688580.dkr.ecr.us-east-1.amazonaws.com/nodejs-goof
+IMAGE_NAME=us-east4-docker.pkg.dev/silicon-light-450017-p0/docker-repo/nodejs-goof
 IMAGE_TAG=latest
 
 echo "📦 Building and pushing image ${IMAGE_NAME}:${IMAGE_TAG} ..."

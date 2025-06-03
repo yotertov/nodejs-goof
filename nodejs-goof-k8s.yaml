@@ -127,14 +127,13 @@ spec:
         - env:
             - name: DOCKER
               value: "1"
-          image: 478468688580.dkr.ecr.us-east-1.amazonaws.com/nodejs-goof:latest
+          image: us-east4-docker.pkg.dev/silicon-light-450017-p0/docker-repo/nodejs-goof:latest
           name: goof
+          imagePullPolicy: Always # Force image pull
           ports:
             - containerPort: 3001
             - containerPort: 9229
           resources: {}
-          securityContext:
-            privileged: true
       restartPolicy: Always
 ---
 apiVersion: apps/v1
